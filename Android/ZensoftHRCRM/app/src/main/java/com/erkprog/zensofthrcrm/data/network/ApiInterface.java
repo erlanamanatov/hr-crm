@@ -9,6 +9,7 @@ import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -32,7 +33,7 @@ public interface ApiInterface {
   Call<Vacancy> getDetailedVacancy(@Path("id") int id);
 
   @GET("interviews")
-  Single<InterviewsResponse> getInterviews();
+  Observable<InterviewsResponse> getInterviews();
 
   @PATCH("candidates/{id}")
   Completable updateCandidates(@Path("id") int id, @Header("Content-Type") String content_type,

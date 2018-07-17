@@ -13,6 +13,7 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
@@ -39,9 +40,9 @@ public class RequestsPresenter implements RequestsContract.Presenter {
         mService.getRequests()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(new DisposableSingleObserver<RequestsResponse>() {
+            .subscribe(new Consumer<RequestsResponse>() {
               @Override
-              public void onSuccess(RequestsResponse requestsResponse) {
+              public void accept(RequestsResponse requestsResponse) throws Exception {
                 if (isViewAttached()) {
                   if (requestsResponse != null && requestsResponse.getRequestList() != null) {
                     mSQLiteHelper.saveRequests(requestsResponse.getRequestList());
@@ -49,11 +50,11 @@ public class RequestsPresenter implements RequestsContract.Presenter {
                   }
                 }
               }
-
+            }, new Consumer<Throwable>() {
               @Override
-              public void onError(Throwable e) {
+              public void accept(Throwable throwable) throws Exception {
                 if (isViewAttached()) {
-                  mView.showMessage(e.getMessage());
+                  mView.showMessage(throwable.getMessage());
                   getRequestsLocal();
                 }
               }
