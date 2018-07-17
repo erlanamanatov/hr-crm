@@ -187,8 +187,8 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     View v = LayoutInflater.from(getActivity()).inflate(R.layout.cd_action_buttons, null, false);
     v.findViewById(R.id.cd_interview_button).setOnClickListener(this);
     v.findViewById(R.id.cd_edit_button).setOnClickListener(this);
-    v.findViewById(R.id.cd_delete_button).setOnClickListener(this);
-    v.findViewById(R.id.cd_message_button).setOnClickListener(this);
+//    v.findViewById(R.id.cd_delete_button).setOnClickListener(this);
+//    v.findViewById(R.id.cd_message_button).setOnClickListener(this);
     mLayout.addView(v);
   }
 
@@ -248,18 +248,18 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       case R.id.cd_interview_button:
         mPresenter.onCreateInterviewClicked();
         break;
-      case R.id.cd_delete_button:
-        //TODO: implement profile deleting
-        showMessage("Delete candidate profile");
-        break;
+//      case R.id.cd_delete_button:
+//        //TODO: implement profile deleting
+//        showMessage("Delete candidate profile");
+//        break;
       case R.id.cd_edit_button:
         //TODO: implement profile editing
         mPresenter.onEditCandidateClicked();
         break;
-      case R.id.cd_message_button:
-        //TODO: implement sending message
-        showMessage("Send message");
-        break;
+//      case R.id.cd_message_button:
+//        //TODO: implement sending message
+//        showMessage("Send message");
+//        break;
       default:
         break;
     }
