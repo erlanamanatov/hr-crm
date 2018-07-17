@@ -129,4 +129,10 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
   public void onItemClick(Interview item) {
     mPresenter.onInterviewItemClick(item);
   }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    getActivity().setTitle(getString(R.string.interviews));
+  }
 }

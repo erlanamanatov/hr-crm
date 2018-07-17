@@ -115,4 +115,10 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
     super.onDestroyView();
     mPresenter.unbind();
   }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    getActivity().setTitle(getString(R.string.requests));
+  }
 }

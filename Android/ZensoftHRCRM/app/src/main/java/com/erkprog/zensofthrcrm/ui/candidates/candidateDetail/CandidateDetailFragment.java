@@ -271,4 +271,10 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     super.onDestroy();
     mPresenter.unbind();
   }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    getActivity().setTitle(getString(R.string.profile_details));
+  }
 }

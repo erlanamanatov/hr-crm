@@ -6,19 +6,21 @@
   <group android:checkableBehavior="single">
     <item
         android:id="@+id/nav_requests"
+        android:icon="@drawable/ic_requests"
         android:title="@string/requests"/>
     <item
         android:id="@+id/nav_vacancies"
+        android:icon="@drawable/ic_vacancies"
         android:title="@string/vacancies"/>
     <item
         android:id="@+id/nav_candidates"
+        android:icon="@drawable/ic_candidates"
         android:title="@string/candidates"/>
     <item
         android:id="@+id/nav_interviews"
+        android:icon="@drawable/ic_interviews"
         android:title="@string/interviews"/>
-    <item
-        android:id="@+id/nav_statistics"
-        android:title="@string/statistics"/>
+
   </group>
 
 

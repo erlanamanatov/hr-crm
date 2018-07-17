@@ -161,5 +161,11 @@ public class InterviewDetailFragment extends Fragment implements InterviewDetail
   public void dismissProgress() {
 
   }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    getActivity().setTitle(getString(R.string.interview_details));
+  }
 }
 

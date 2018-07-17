@@ -101,5 +101,11 @@ public class VacancyDetailFragment extends Fragment implements VacancyDetailCont
   public void showVacancyDetails(Vacancy Vacancy) {
 
   }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    getActivity().setTitle(getString(R.string.vacancy_details));
+  }
 }
 

@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity
 
     initNavigationView();
     setUpGoogleAccount();
+
+    switchFragment(RequestsFragment.newInstance());
   }
 
   private void initNavigationView() {
@@ -114,8 +116,6 @@ public class MainActivity extends AppCompatActivity
 
     } else if (id == R.id.nav_interviews) {
       switchFragment(new InterviewsFragment());
-
-    } else if (id == R.id.nav_statistics) {
 
     } else if (id == R.id.nav_sign_out) {
       signOut();

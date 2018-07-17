@@ -142,4 +142,10 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
   public static VacanciesFragment newInstance() {
     return new VacanciesFragment();
   }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    getActivity().setTitle(getString(R.string.vacancies));
+  }
 }

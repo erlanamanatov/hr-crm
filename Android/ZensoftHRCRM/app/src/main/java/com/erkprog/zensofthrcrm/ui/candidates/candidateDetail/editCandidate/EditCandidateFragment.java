@@ -276,4 +276,9 @@ public class EditCandidateFragment extends Fragment implements EditCandidateCont
     startActivity(intent);
   }
 
+  @Override
+  public void onStart() {
+    super.onStart();
+    getActivity().setTitle(getString(R.string.edit_profile));
+  }
 }

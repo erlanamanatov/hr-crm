@@ -225,4 +225,10 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
     super.onDestroyView();
     mPresenter.unbind();
   }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    getActivity().setTitle(getString(R.string.create_interview));
+  }
 }

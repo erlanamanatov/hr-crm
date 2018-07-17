@@ -123,4 +123,10 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
     super.onDestroyView();
     mPresenter.unbind();
   }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    getActivity().setTitle(getString(R.string.candidates));
+  }
 }
