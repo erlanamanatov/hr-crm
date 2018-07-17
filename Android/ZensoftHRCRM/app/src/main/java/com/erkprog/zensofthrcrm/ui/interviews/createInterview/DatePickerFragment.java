@@ -45,7 +45,7 @@ public class DatePickerFragment extends DialogFragment {
     mTimePicker = v.findViewById(R.id.crint_time_picker);
     mTimePicker.setCurrentHour(hour);
     mTimePicker.setCurrentMinute(minute);
-    return new AlertDialog.Builder(getActivity())
+    final AlertDialog dialog = new AlertDialog.Builder(getActivity())
         .setView(v)
         .setTitle("Date and Time Picker")
         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -68,6 +68,17 @@ public class DatePickerFragment extends DialogFragment {
           }
         })
         .create();
+
+    dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+      @Override
+      public void onShow(DialogInterface arg0) {
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources()
+            .getColor(R.color.colorAccent));
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextSize(14);
+      }
+    });
+
+    return dialog;
   }
 
   public static DatePickerFragment newInstance(Date date) {

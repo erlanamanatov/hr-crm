@@ -2,7 +2,6 @@ package com.erkprog.zensofthrcrm.ui.interviews.createInterview.interviewers;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,7 +83,8 @@ public class InterviewersFragment extends DialogFragment {
       }
     });
 
-    return new AlertDialog.Builder(getActivity())
+//    return new AlertDialog.Builder(getActivity())
+    final AlertDialog dialog = new AlertDialog.Builder(getActivity())
         .setView(v)
         .setTitle(R.string.add_interviewers)
         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -96,6 +97,17 @@ public class InterviewersFragment extends DialogFragment {
           }
         })
         .create();
+
+    dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+      @Override
+      public void onShow(DialogInterface arg0) {
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources()
+            .getColor(R.color.colorAccent));
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextSize(14);
+      }
+    });
+
+    return dialog;
   }
 
   private ArrayList<InterviewerItem> getInterviewers(UsersResponse response) {
