@@ -2,10 +2,12 @@ package com.erkprog.zensofthrcrm.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Requirement {
+import java.io.Serializable;
+
+public class Requirement implements Serializable {
   private Integer id;
   private String name;
-  private Integer department;
+  private Department department;
   private String type;
 
 
@@ -17,11 +19,11 @@ public class Requirement {
     this.id = id;
   }
 
-  public Integer getDepartment() {
+  public Department getDepartment() {
     return department;
   }
 
-  public void setDepartment(Integer department) {
+  public void setDepartment(Department department) {
     this.department = department;
   }
 

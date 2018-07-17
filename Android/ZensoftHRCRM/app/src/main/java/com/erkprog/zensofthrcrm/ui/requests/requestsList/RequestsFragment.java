@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,12 +18,15 @@ import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Request;
 import com.erkprog.zensofthrcrm.ui.ItemClickListener;
+import com.erkprog.zensofthrcrm.ui.requests.requestDetail.RequestDetailFragment;
 
 import java.util.List;
 
 public class RequestsFragment extends Fragment implements RequestsContract.View,
     ItemClickListener<Request> {
   private static final String TAG = "REQUESTS FRAGMENT";
+  private static final int REQUEST_DETAIL = '1';
+  private static final String DETAIL_DIALOG = "detail dialog";
 
   private RequestsContract.Presenter mPresenter;
   private RequestsAdapter mAdapter;
@@ -71,6 +75,14 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
   public void showRequests(List<Request> requests) {
     mAdapter = new RequestsAdapter(requests, this);
     mRecyclerView.setAdapter(mAdapter);
+  }
+
+  @Override
+  public void showRequestDetails(Request request) {
+    FragmentManager fm = getFragmentManager();
+    RequestDetailFragment fragment = RequestDetailFragment.newInstance(request);
+    fragment.setTargetFragment(RequestsFragment.this, REQUEST_DETAIL);
+    fragment.show(fm, DETAIL_DIALOG);
   }
 
   @Override

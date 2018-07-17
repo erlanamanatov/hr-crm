@@ -2,9 +2,10 @@ package com.erkprog.zensofthrcrm.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Request {
+public class Request implements Serializable {
   private Integer id;
   private String created;
   private String modified;
@@ -40,11 +41,11 @@ public class Request {
     this.modified = modified;
   }
 
-  public User getUserCreatedBy() {
+  public User getCreatedBy() {
     return createdBy;
   }
 
-  public void setUserCreatedBy(User createdBy) {
+  public void setCreatedBy(User createdBy) {
     this.createdBy = createdBy;
   }
 

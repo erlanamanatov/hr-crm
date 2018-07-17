@@ -43,7 +43,7 @@
   <string name="add_interviewers">Add interviewers</string>
   <string name="ok">OK</string>
   <string name="interview_created">Interview created</string>
-  <string name="response_not_successfull">response is not successfull</string>
+  <string name="response_not_successful">response is not successfull</string>
   <string name="set_up_interviewers">set up interviewers and date</string>
   <string name="msg_no_interviews">No interviews found!</string>
   <string name="msg_no_vacancies">No vacancies found!</string>
@@ -62,7 +62,6 @@
   <string name="comments_label">comments</string>
   <string name="created_label">Created</string>
   <string name="last_published_label">Latest publishment</string>
-
   <string name="name">Name</string>
   <string name="title">Title</string>
   <string name="city">City</string>
@@ -74,5 +73,9 @@
   <string name="vcomments">comments</string>
   <string name="vcreated">Created</string>
   <string name="vlast_published">Latest publishment</string>
-
+  <string name="created_by">Created by</string>
+  <string name="count">count</string>
+  <string name="requirements">requirements</string>
+  <string name="modified">modified</string>
+  <string name="create_vacancy">Create vacancy</string>
 </resources>

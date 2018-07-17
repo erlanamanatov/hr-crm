@@ -287,8 +287,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       cv.put(CREATED, request.getCreated());
       cv.put(MODIFIED, request.getCreated());
       cv.put(STATUS, request.getStatus());
-      if (request.getUserCreatedBy() != null)
-        cv.put(CREATED_BY + ID, request.getUserCreatedBy().getId());
+      if (request.getCreatedBy() != null)
+        cv.put(CREATED_BY + ID, request.getCreatedBy().getId());
 
       // push requirements IDs to list as string type
       List<String> reqIds = new ArrayList<String>();
@@ -922,8 +922,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       do {
         requirement.setId(requirementCursor.getInt(requirementCursor.getColumnIndex(ID)));
         requirement.setName(requirementCursor.getString(requirementCursor.getColumnIndex(NAME)));
-        requirement.setDepartment(requirementCursor.getInt(requirementCursor
-            .getColumnIndex(DEPARTMENT + ID)));
+        requirement.setDepartment(getDepartment(requirementCursor.getString(requirementCursor
+            .getColumnIndex(DEPARTMENT + ID))));
         requirement.setType(requirementCursor.getString(requirementCursor.getColumnIndex(TYPE)));
       } while (requirementCursor.moveToNext());
     }
@@ -1022,7 +1022,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         request.setId(requestCursor.getInt(requestCursor.getColumnIndex(ID)));
         request.setPosition(getPosition(requestCursor.getString(requestCursor
             .getColumnIndex(POSITION + ID))));
-        request.setUserCreatedBy(getUser(requestCursor.getString(requestCursor
+        request.setCreatedBy(getUser(requestCursor.getString(requestCursor
             .getColumnIndex(CREATED_BY + ID))));
         request.setCreated(requestCursor.getString(requestCursor.getColumnIndex(CREATED)));
         request.setCount(requestCursor.getInt(requestCursor.getColumnIndex(COUNT)));
@@ -1344,7 +1344,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
           request.setRequirementList(getRequirements(Converter.convertStringToList(requirementsId)));
         request.setStatus(status);
         if (createdBy != null)
-          request.setUserCreatedBy(getUser(createdBy));
+          request.setCreatedBy(getUser(createdBy));
         request.setId(id);
         request.setModified(modified);
 
@@ -1408,11 +1408,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         Requirement requirement = new Requirement();
 
         int id = cursor.getInt(idIndex);
-        int departmentId = cursor.getInt(departmentIdIndex);
+        String departmentId = cursor.getString(departmentIdIndex);
         String name = cursor.getString(nameIndex);
         String type = cursor.getString(typeIndex);
 
-        requirement.setDepartment(departmentId);
+        requirement.setDepartment(getDepartment(departmentId));
         requirement.setId(id);
         requirement.setName(name);
         requirement.setType(type);

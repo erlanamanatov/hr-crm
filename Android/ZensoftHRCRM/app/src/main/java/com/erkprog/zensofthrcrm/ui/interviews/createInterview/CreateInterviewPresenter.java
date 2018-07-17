@@ -1,11 +1,13 @@
 package com.erkprog.zensofthrcrm.ui.interviews.createInterview;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.data.entity.InterviewRequest;
 import com.erkprog.zensofthrcrm.data.network.ApiInterface;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CreateInterviewPresenter implements CreateInterviewContract.Presenter {
+  private static final String TAG = "CIP";
 
   private CreateInterviewContract.View mView;
   private Context mContext;
@@ -47,12 +50,13 @@ public class CreateInterviewPresenter implements CreateInterviewContract.Present
     mApiService.postInterview(CONTENT_TYPE, request).enqueue(new Callback<Interview>() {
       @Override
       public void onResponse(Call<Interview> call, Response<Interview> response) {
+        Log.d(TAG, "onResponse: " + new GsonBuilder().setPrettyPrinting().create().toJson(response));
         if (isViewAttached()) {
           mView.dismissProgress();
           if (response.isSuccessful()) {
             mView.showMessage(mContext.getString(R.string.interview_created));
           } else {
-            mView.showMessage(mContext.getString(R.string.response_not_successfull));
+            mView.showMessage(mContext.getString(R.string.response_not_successful));
           }
         }
       }
