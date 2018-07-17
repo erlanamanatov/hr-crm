@@ -176,11 +176,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       ID + " INTEGER_PRIMARY_KEY, " +
       TITLE + " TEXT, " +
       CITY + " TEXT, " +
-      ADDRESS +  " TEXT, " +
-      WORKING_CONDITIONS+ID + " TEXT, "+
+      ADDRESS + " TEXT, " +
+      WORKING_CONDITIONS + ID + " TEXT, " +
       SALARY_MIN + " REAL, " +
       SALARY_MAX + " REAL, " +
-      RESPONSIBILITIES +" TEXT, " +
+      RESPONSIBILITIES + " TEXT, " +
       IMAGE + " TEXT, " +
       COMMENT + " TEXT, " +
       WORKING_HOURS + " TEXT, " +
@@ -223,7 +223,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
   private static final String CREATE_TABLE_WORKING_CONDITIONS = "CREATE TABLE IF NOT EXISTS " +
       WORKING_CONDITIONS + "(" +
       ID + " INTEGER_PRIMARY_KEY, " +
-      VACANCY+ID + " TEXT, " +
+      VACANCY + ID + " TEXT, " +
       NAME + " TEXT)";
 
 
@@ -350,7 +350,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
       Cursor cursor = db.rawQuery("SELECT * FROM " + WORKING_CONDITIONS + " WHERE " + NAME + " =?",
           new
-          String[]{String.valueOf(workingCondition.getName())});
+              String[]{String.valueOf(workingCondition.getName())});
       if (cursor.getCount() > 0)
         db.update(WORKING_CONDITIONS, cv, NAME + " = ?", new String[]{
             workingCondition.getName()});
@@ -645,7 +645,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       cv.put(NAME, vacancy.getName());
       cv.put(TITLE, vacancy.getTitle());
       cv.put(CITY, vacancy.getCity());
-      cv.put(ADDRESS,vacancy.getAddress());
+      cv.put(ADDRESS, vacancy.getAddress());
       cv.put(RESPONSIBILITIES, vacancy.getResponsibilities());
       cv.put(IMAGE, vacancy.getImage());
       cv.put(COMMENT, vacancy.getComments());
@@ -653,7 +653,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       cv.put(DIESEL, vacancy.isDiesel());
       cv.put(FACEBOOK, vacancy.isFacebook());
       cv.put(NAME, vacancy.getName());
-      cv.put(JOBKG,vacancy.isJobkg());
+      cv.put(JOBKG, vacancy.isJobkg());
 
 
       List<String> workingConditionsIds = new ArrayList<String>();
@@ -956,7 +956,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
           List<String> workStringList = Converter.convertStringToList(vacancyCursor.getString
               (vacancyCursor
                   .getColumnIndex
-                      (WORKING_CONDITIONS+ ID)));
+                      (WORKING_CONDITIONS + ID)));
 
           vacancy.setWorkConditions(getWorkingConditions(workStringList));
         }
@@ -968,9 +968,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         vacancy.setWorkingHours(vacancyCursor.getString(vacancyCursor.getColumnIndex(WORKING_HOURS)));
         vacancy.setCreated(vacancyCursor.getString(vacancyCursor.getColumnIndex(CREATED)));
         vacancy.setLastPublished(vacancyCursor.getString(vacancyCursor.getColumnIndex(LAST_PUBLISHED)));
-        vacancy.setDiesel(vacancyCursor.getInt(vacancyCursor.getColumnIndex(DIESEL))>0);
-        vacancy.setJobkg(vacancyCursor.getInt(vacancyCursor.getColumnIndex(JOBKG))>0);
-        vacancy.setFacebook(vacancyCursor.getInt(vacancyCursor.getColumnIndex(FACEBOOK))>0);
+        vacancy.setDiesel(vacancyCursor.getInt(vacancyCursor.getColumnIndex(DIESEL)) > 0);
+        vacancy.setJobkg(vacancyCursor.getInt(vacancyCursor.getColumnIndex(JOBKG)) > 0);
+        vacancy.setFacebook(vacancyCursor.getInt(vacancyCursor.getColumnIndex(FACEBOOK)) > 0);
 
       } while (vacancyCursor.moveToNext());
     }
@@ -1613,22 +1613,29 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         String email = cursor.getString(emailIndex);
         String status = cursor.getString(statusIndex);
         String phone = cursor.getString(phoneIndex);
-        String cvsId = cursor.getString(cvsIdIndex);
         float exp = cursor.getFloat(expIndex);
         String positionId = cursor.getString(positionIdIndex);
         String level = cursor.getString(levelIndex);
-        String interviewsId = cursor.getString(interviewsIdIndex);
-        String commentsId = cursor.getString(commentsIdIndex);
         String created = cursor.getString(createdIndex);
-
-        if (interviewsId != null)
-          candidate.setInterviews(getInterviews(Converter.convertStringToList(interviewsId)));
         if (positionId != null)
           candidate.setPosition(getPosition(positionId));
-        if (cvsId != null)
-          candidate.setCvs(getCvs(Converter.convertStringToList(cvsId)));
-        if (commentsId != null)
-          candidate.setComments(getComments(Converter.convertStringToList(commentsId)));
+
+        if (cvsIdIndex > 0) {
+          String cvsId = cursor.getString(cvsIdIndex);
+          if (cvsId != null)
+            candidate.setCvs(getCvs(Converter.convertStringToList(cvsId)));
+        }
+        if (interviewsIdIndex > 0) {
+          String interviewsId = cursor.getString(interviewsIdIndex);
+          if (interviewsId != null)
+            candidate.setInterviews(getInterviews(Converter.convertStringToList(interviewsId)));
+        }
+        if(commentsIdIndex>0) {
+          String commentsId = cursor.getString(commentsIdIndex);
+
+          if (commentsId != null)
+            candidate.setComments(getComments(Converter.convertStringToList(commentsId)));
+        }
         candidate.setStatus(status);
         candidate.setPhone(phone);
         candidate.setLevel(level);
@@ -1663,7 +1670,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       int titleIndex = cursor.getColumnIndex(TITLE);
       int addressIndex = cursor.getColumnIndex(ADDRESS);
       int cityIndex = cursor.getColumnIndex(CITY);
-      int worConsIndex = cursor.getColumnIndex(WORKING_CONDITIONS+ID);
+      int worConsIndex = cursor.getColumnIndex(WORKING_CONDITIONS + ID);
       int salMaxIndex = cursor.getColumnIndex(SALARY_MAX);
       int salMinIndex = cursor.getColumnIndex(SALARY_MIN);
       int resIndex = cursor.getColumnIndex(RESPONSIBILITIES);
@@ -1691,9 +1698,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         String image = cursor.getString(imageIndex);
         String comment = cursor.getString(commentIndex);
         String workingHours = cursor.getString(workingHoursIndex);
-        Boolean diesel = cursor.getInt(dieselIndex)>0;
-        Boolean jobkg = cursor.getInt(jobkgIndex)> 0;
-        Boolean facebook= cursor.getInt(facebookIndex)>0;
+        Boolean diesel = cursor.getInt(dieselIndex) > 0;
+        Boolean jobkg = cursor.getInt(jobkgIndex) > 0;
+        Boolean facebook = cursor.getInt(facebookIndex) > 0;
 
         vacancy.setName(name);
         vacancy.setId(id);
