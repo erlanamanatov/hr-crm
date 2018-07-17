@@ -3,10 +3,18 @@ package com.erkprog.zensofthrcrm.ui.vacancies.vacanciesList;
 import android.content.Context;
 
 import com.erkprog.zensofthrcrm.R;
+import com.erkprog.zensofthrcrm.data.db.SQLiteHelper;
 import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
 import com.erkprog.zensofthrcrm.data.network.ApiInterface;
+import com.erkprog.zensofthrcrm.ui.interviews.interviewsList.InterviewsContract;
 
+import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,41 +22,55 @@ import retrofit2.Response;
 public class VacanciesPresenter implements VacanciesContract.Presenter {
 
   private VacanciesContract.View mView;
-  private ApiInterface mApiService;
-  private Context mContext;
+  private ApiInterface mService;
+  private SQLiteHelper mSQLiteHelper;
+  private CompositeDisposable disposable = new CompositeDisposable();
 
-  VacanciesPresenter(Context context, ApiInterface service) {
-    mContext = context;
-    mApiService = service;
+  VacanciesPresenter(VacanciesContract.View view, ApiInterface service, SQLiteHelper
+      sqliteHelper) {
+    mView = view;
+    mService = service;
+    mSQLiteHelper = sqliteHelper;
   }
 
   @Override
-  public void loadData() {
-    mView.showProgress();
-    mApiService.getVacancies().enqueue(new Callback<VacanciesResponse>() {
-      @Override
-      public void onResponse(Call<VacanciesResponse> call, Response<VacanciesResponse> response) {
-        if (isViewAttached()) {
-          mView.dismissProgress();
-          if (response.isSuccessful() && response.body().getVacancyList() != null) {
-            mView.showVacancies(response.body().getVacancyList());
-          }
-        }
-      }
+  public void getVacanciesInternet() {
+    disposable.add(
+        mService.getVacancies()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(new DisposableSingleObserver<VacanciesResponse>() {
+              @Override
+              public void onSuccess(VacanciesResponse vacanciesResponse) {
+                if (isViewAttached()) {
+                  if (vacanciesResponse != null && vacanciesResponse.getVacancyList() != null) {
+                    mSQLiteHelper.saveVacancies(vacanciesResponse.getVacancyList());
+                    mView.showVacancies(vacanciesResponse.getVacancyList());
+                  }
+                }
+              }
 
-      @Override
-      public void onFailure(Call<VacanciesResponse> call, Throwable t) {
-        if (isViewAttached()) {
-          mView.dismissProgress();
-          mView.showMessage(t.getMessage());
-        }
-      }
-    });
+              @Override
+              public void onError(Throwable e) {
+                if (isViewAttached()) {
+                  mView.showMessage(e.getMessage());
+                  getVacanciesLocal();
+                }
+              }
+            })
+    );
+  }
+
+  @Override
+  public void getVacanciesLocal() {
+    List<Vacancy> vacancies= mSQLiteHelper.getVacancies();
+    if(vacancies != null)
+      mView.showVacancies(vacancies);
   }
 
   @Override
   public void onVacancyItemClick(Vacancy vacancy) {
-    // TODO: implement mView.startEditVacancy() here
+    mView.showDetailedVacancy(vacancy.getId());
   }
 
   private boolean isViewAttached() {

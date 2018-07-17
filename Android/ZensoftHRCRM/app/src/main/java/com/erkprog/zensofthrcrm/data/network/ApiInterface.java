@@ -39,7 +39,7 @@ public interface ApiInterface {
                                @Body Candidate candidate);
 
   @GET("vacancies")
-  Call<VacanciesResponse> getVacancies();
+  Single<VacanciesResponse> getVacancies();
 
   @GET("requests")
   Call<RequestsResponse> getRequests();

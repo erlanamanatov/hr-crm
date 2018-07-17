@@ -6,7 +6,7 @@ import com.erkprog.zensofthrcrm.ui.ILifecycle;
 
 import java.util.List;
 
-public interface VacanciesContract {
+public interface VacanciesContract extends BaseView{
 
   interface View extends BaseView {
 
@@ -17,7 +17,10 @@ public interface VacanciesContract {
   }
 
   interface Presenter extends ILifecycle<View> {
-    void loadData();
+
+    void getVacanciesInternet();
+
+    void getVacanciesLocal();
 
     void onVacancyItemClick(Vacancy vacancy);
   }

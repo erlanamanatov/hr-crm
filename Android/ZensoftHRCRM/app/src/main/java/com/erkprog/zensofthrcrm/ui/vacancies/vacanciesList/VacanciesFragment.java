@@ -2,6 +2,8 @@ package com.erkprog.zensofthrcrm.ui.vacancies.vacanciesList;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,10 +34,7 @@ import butterknife.ButterKnife;
 public class VacanciesFragment extends Fragment implements VacanciesContract.View,
     ItemClickListener<Vacancy> {
 
-  private static final String TAG = "VACANCIES FRAGMENT";
-
   private VacanciesContract.Presenter mPresenter;
-  private VacanciesAdapter mAdapter;
 
   @BindView(R.id.recycler_view_all_vacancies)
   RecyclerView mRecyclerView;
@@ -53,8 +52,8 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
   }
 
   private void initPresenter() {
-    mPresenter = new VacanciesPresenter(requireContext(),
-        CRMApplication.getInstance(requireContext()).getApiService());
+    mPresenter = new VacanciesPresenter(this, CRMApplication.getInstance(requireContext())
+        .getApiService(), CRMApplication.getInstance(requireContext()).getSQLiteHelper());
     mPresenter.bind(this);
   }
 
@@ -68,13 +67,15 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
     dismissProgress();
 
     initRecyclerView(v);
-    return v;
-  }
+    showProgress();
+    if(hasInternetConnection(v.getContext())){
+      mPresenter.getVacanciesInternet();
+    }
+    else{
+      mPresenter.getVacanciesLocal();
+    }
 
-  @Override
-  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    mPresenter.loadData();
+    return v;
   }
 
   private void initRecyclerView(View v) {
@@ -84,10 +85,11 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
 
   @Override
   public void showVacancies(List<Vacancy> vacancies) {
+    dismissProgress();
 
     if (vacancies.size() > 0) {
-      mAdapter = new VacanciesAdapter(vacancies, this);
-      mRecyclerView.setAdapter(mAdapter);
+      VacanciesAdapter adapter = new VacanciesAdapter(vacancies, this);
+      mRecyclerView.setAdapter(adapter);
     } else {
       noVacanciesView.setVisibility(View.VISIBLE);
     }
@@ -95,6 +97,7 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
 
   @Override
   public void showDetailedVacancy(int vacancyId) {
+    Log.d("me", "showDetailedVacancy: ");
     Intent intent = new Intent(getActivity(), VacancyDetail.class);
     intent.putExtra("vacancy_id", vacancyId);
     startActivity(intent);
@@ -107,6 +110,12 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
 
   @Override
   public boolean hasInternetConnection(Context context) {
+    ConnectivityManager connectivityManager
+        = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    if (connectivityManager != null) {
+      NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+      return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
     return false;
   }
 
