@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetail;
+import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetailFragment;
 
 import rx.Observable;
 
@@ -31,6 +34,7 @@ import rx.functions.Func1;
 public class EditCandidateFragment extends Fragment implements EditCandidateContract.View {
 
   private EditCandidateContract.Presenter mPresenter;
+  public static final String ARGUMENT_CANDIDATE_ID = "argument candidate id";
   private Candidate mCandidate;
   private static final String NO_INTERNET_MESSAGE = "Cannot save candidate due to your internet " +
       "connection";
@@ -43,9 +47,6 @@ public class EditCandidateFragment extends Fragment implements EditCandidateCont
 
   @BindView(R.id.ec_last_name)
   EditText mLastName;
-
-  @BindView(R.id.ec_department)
-  EditText mDepartment;
 
   @BindView(R.id.ec_email)
   EditText mEmail;
@@ -111,9 +112,6 @@ public class EditCandidateFragment extends Fragment implements EditCandidateCont
   private void setViews() {
     if (mCandidate != null) {
       mFirstName.setText(mCandidate.getFirstName());
-      if (mCandidate.getPosition() != null && mCandidate.getPosition().getDepartment() != null) {
-        mDepartment.setText(mCandidate.getPosition().getDepartment().getName());
-      }
       mLastName.setText(mCandidate.getLastName());
       mEmail.setText(mCandidate.getEmail());
       mExp.setText(String.valueOf(mCandidate.getExperience()));
@@ -131,7 +129,6 @@ public class EditCandidateFragment extends Fragment implements EditCandidateCont
   private void subscribeObs() {
     Observable<String> firstNameObs = RxEditText.getTextWatcherObservable(mFirstName);
     Observable<String> lastNameObs = RxEditText.getTextWatcherObservable(mLastName);
-    Observable<String> departmentObs = RxEditText.getTextWatcherObservable(mDepartment);
     Observable<String> emailObs = RxEditText.getTextWatcherObservable(mEmail);
     Observable<String> expObs = RxEditText.getTextWatcherObservable(mExp);
     Observable<String> phoneObs = RxEditText.getTextWatcherObservable(mPhone);
@@ -170,23 +167,6 @@ public class EditCandidateFragment extends Fragment implements EditCandidateCont
       }
     });
 
-    departmentObs.map(new Func1<String, Boolean>() {
-      @Override
-      public Boolean call(String s) {
-        if (s.equals(mCandidate.getPosition().getDepartment().getName())) {
-          return false;
-        } else {
-          mCandidate.getPosition().getDepartment().setName(s);
-          return true;
-        }
-      }
-    }).subscribe(new Action1<Boolean>() {
-      @Override
-      public void call(Boolean o) {
-        mButton.setEnabled(o);
-      }
-    });
-
     emailObs.map(new Func1<String, Boolean>() {
       @Override
       public Boolean call(String s) {
@@ -210,7 +190,8 @@ public class EditCandidateFragment extends Fragment implements EditCandidateCont
         if (s.equals(String.valueOf(mCandidate.getExperience()))) {
           return false;
         } else {
-          mCandidate.setExperience(Float.valueOf(s));
+          if (!s.isEmpty())
+            mCandidate.setExperience(Float.valueOf(s));
           return true;
         }
       }
@@ -272,8 +253,14 @@ public class EditCandidateFragment extends Fragment implements EditCandidateCont
   @Override
   public void onFinishedRequest(int candidateId) {
     dismissProgress();
-    Intent intent = CandidateDetail.getIntent(getActivity(), candidateId);
-    startActivity(intent);
+    Bundle arguments = new Bundle();
+    arguments.putInt(ARGUMENT_CANDIDATE_ID, candidateId);
+    FragmentManager fragmentManager =  getFragmentManager();
+    CandidateDetailFragment fragment = new CandidateDetailFragment();
+    fragment.setArguments(arguments);
+    if(fragmentManager != null)
+    fragmentManager.beginTransaction().replace(R.id.candidate_detail_container, fragment)
+        .commit();
   }
 
   @Override

@@ -24,7 +24,7 @@ import retrofit2.http.Path;
 public interface ApiInterface {
 
   @GET("candidates")
-  Call<CandidatesResponse> getCandidates();
+  Single<CandidatesResponse> getCandidates();
 
   @GET("candidates/{id}")
   Call<Candidate> getDetailedCandidate(@Path("id") int id);

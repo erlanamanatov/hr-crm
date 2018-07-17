@@ -18,7 +18,9 @@ public interface CandidatesContract {
 
   interface Presenter extends ILifecycle<View> {
 
-    void loadCandidates();
+    void getCandidatesInternet();
+
+    void getCandidatesLocal();
 
     void onCandidateItemClick(Candidate candidate);
 

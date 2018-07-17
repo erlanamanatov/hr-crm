@@ -99,23 +99,6 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/ec_department_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/department"/>
-
-    <EditText
-        android:id="@+id/ec_department"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorBlack"
-        android:singleLine="true"
-        android:hint="@string/department"
-        android:inputType="text"
-        android:textSize="@dimen/main_attributes"
-        tools:text="Android dep"/>
-
-    <TextView
         android:id="@+id/ec_exp_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -129,7 +112,7 @@
         android:textSize="@dimen/main_attributes"
         android:singleLine="true"
         android:hint="@string/years_of_experience"
-        android:inputType="text"
+        android:inputType="numberDecimal"
         tools:text="5"/>
 
     <Button

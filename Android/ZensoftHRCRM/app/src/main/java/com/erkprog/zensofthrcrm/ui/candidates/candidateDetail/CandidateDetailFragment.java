@@ -203,14 +203,14 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   public void startEditCandidate(Candidate candidate) {
     EditCandidateFragment editFragment = new EditCandidateFragment();
     Bundle bundle = new Bundle();
-    Candidate obj = candidate;
-    bundle.putSerializable("candidate", obj);
+    bundle.putSerializable("candidate", candidate);
     editFragment.setArguments(bundle);
     FragmentManager fragmentManager = getFragmentManager();
-    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-    fragmentTransaction.replace(R.id.candidate_detail_container, editFragment);
-    fragmentTransaction.addToBackStack(null);
-    fragmentTransaction.commit();
+    if(fragmentManager != null) {
+      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+      fragmentTransaction.replace(R.id.candidate_detail_container, editFragment);
+      fragmentTransaction.commit();
+    }
   }
 
   public static CandidateDetailFragment newInstance(int candidateId) {

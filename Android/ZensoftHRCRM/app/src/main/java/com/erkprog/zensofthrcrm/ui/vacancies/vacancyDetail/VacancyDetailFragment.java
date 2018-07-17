@@ -35,6 +35,8 @@ public class VacancyDetailFragment extends Fragment implements VacancyDetailCont
 
   private VacancyDetailContract.Presenter mPresenter;
 
+
+
   @BindView(R.id.recycler_view_all_vacancies)
   RecyclerView mRecyclerView;
 
