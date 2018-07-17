@@ -21,6 +21,7 @@ import com.erkprog.zensofthrcrm.data.entity.Requirement;
 import com.erkprog.zensofthrcrm.data.entity.Template;
 import com.erkprog.zensofthrcrm.data.entity.User;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
+import com.erkprog.zensofthrcrm.data.entity.WorkingCondition;
 import com.erkprog.zensofthrcrm.utils.Converter;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ import java.util.List;
 public class SQLiteHelper extends SQLiteOpenHelper {
 
   private static final String DB_NAME = "HR_CRM";
-  private static final int DB_VERSION = 6;
+  private static final int DB_VERSION = 7;
 
   // Tables
   private static final String INTERVIEWS = "INTERVIEWS";
@@ -77,6 +78,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
   private static final String DEPARTMENT = "DEPARTMENT";
   private static final String CRITERIA = "CRITERIA";
   private static final String MODIFIED = "MODIFIED";
+  private static final String VACANCY = "VACANCY";
+  private static final String DIESEL = "DIESEL";
+  private static final String FACEBOOK = "FACEBOOK";
+  private static final String JOBKG = "JOBKG";
+  private static final String TITLE = "TITLE";
+  private static final String CITY = "CITY";
+  private static final String ADDRESS = "ADDRESS";
+  private static final String WORKING_HOURS = "WORKING_HOURS";
+  private static final String SALARY_MIN = "SALARY_MIN";
+  private static final String SALARY_MAX = "SALARY_MAX";
+  private static final String RESPONSIBILITIES = "RESPONSIBILITIES";
+  private static final String IMAGE = "IMAGE";
+  private static final String WORKING_CONDITIONS = "WORK_CONDITIONS";
 
   // Create tables strings
 
@@ -160,9 +174,21 @@ public class SQLiteHelper extends SQLiteOpenHelper {
   private static final String CREATE_TABLE_VACANCIES = "CREATE TABLE IF NOT EXISTS " +
       VACANCIES + "(" +
       ID + " INTEGER_PRIMARY_KEY, " +
+      TITLE + " TEXT, " +
+      CITY + " TEXT, " +
+      ADDRESS +  " TEXT, " +
+      WORKING_CONDITIONS+ID + " TEXT, "+
+      SALARY_MIN + " REAL, " +
+      SALARY_MAX + " REAL, " +
+      RESPONSIBILITIES +" TEXT, " +
+      IMAGE + " TEXT, " +
+      COMMENT + " TEXT, " +
+      WORKING_HOURS + " TEXT, " +
       CREATED + " TEXT, " +
       LAST_PUBLISHED + " TEXT, " +
-      STATUS + " TEXT , " +
+      DIESEL + " BOOLEAN , " +
+      JOBKG + " BOOLEAN , " +
+      FACEBOOK + " BOOLEAN , " +
       NAME + " TEXT);";
 
   private static final String CREATE_TABLE_USERS = "CREATE TABLE IF NOT EXISTS " +
@@ -194,6 +220,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       CONTENT + " TEXT, " +
       CREATED + " TEXT)";
 
+  private static final String CREATE_TABLE_WORKING_CONDITIONS = "CREATE TABLE IF NOT EXISTS " +
+      WORKING_CONDITIONS + "(" +
+      ID + " INTEGER_PRIMARY_KEY, " +
+      VACANCY+ID + " TEXT, " +
+      NAME + " TEXT)";
+
 
   public SQLiteHelper(Context context) {
     super(context, DB_NAME, null, DB_VERSION);
@@ -202,7 +234,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
   @Override
   public void onCreate(SQLiteDatabase db) {
-
+    db.execSQL(CREATE_TABLE_WORKING_CONDITIONS);
     db.execSQL(CREATE_TABLE_CANDIDATES);
     db.execSQL(CREATE_TABLE_CRITERIAS);
     db.execSQL(CREATE_TABLE_DEPARTMENTS);
@@ -224,6 +256,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     db.execSQL("DROP TABLE IF EXISTS " + CANDIDATES);
+    db.execSQL("DROP TABLE IF EXISTS " + WORKING_CONDITIONS);
     db.execSQL("DROP TABLE IF EXISTS " + CRITERIAS);
     db.execSQL("DROP TABLE IF EXISTS " + DEPARTMENTS);
     db.execSQL("DROP TABLE IF EXISTS " + EVALUATIONS);
@@ -304,6 +337,33 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     db.close();
   }
+
+
+  public void saveWorkingConditions(List<WorkingCondition> workingConditions) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    ContentValues cv = new ContentValues();
+
+    for (int i = 0; i < workingConditions.size(); i++) {
+      WorkingCondition workingCondition = workingConditions.get(i);
+
+      cv.put(NAME, workingCondition.getName());
+
+      Cursor cursor = db.rawQuery("SELECT * FROM " + WORKING_CONDITIONS + " WHERE " + NAME + " =?",
+          new
+          String[]{String.valueOf(workingCondition.getName())});
+      if (cursor.getCount() > 0)
+        db.update(WORKING_CONDITIONS, cv, NAME + " = ?", new String[]{
+            workingCondition.getName()});
+      else
+        db.insert(WORKING_CONDITIONS, null,
+            cv);
+      // if row is existed then update by id
+
+    }
+
+    db.close();
+  }
+
 
   public void savePositions(List<Position> positions) {
     SQLiteDatabase db = this.getWritableDatabase();
@@ -583,8 +643,35 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
       cv.put(ID, vacancy.getId());
       cv.put(NAME, vacancy.getName());
-      cv.put(LAST_PUBLISHED, vacancy.getDateLastPublished());
-      cv.put(CREATED, vacancy.getDateCreated());
+      cv.put(TITLE, vacancy.getTitle());
+      cv.put(CITY, vacancy.getCity());
+      cv.put(ADDRESS,vacancy.getAddress());
+      cv.put(RESPONSIBILITIES, vacancy.getResponsibilities());
+      cv.put(IMAGE, vacancy.getImage());
+      cv.put(COMMENT, vacancy.getComments());
+      cv.put(WORKING_HOURS, vacancy.getWorkingHours());
+      cv.put(DIESEL, vacancy.isDiesel());
+      cv.put(FACEBOOK, vacancy.isFacebook());
+      cv.put(NAME, vacancy.getName());
+      cv.put(JOBKG,vacancy.isJobkg());
+
+
+      List<String> workingConditionsIds = new ArrayList<String>();
+      if (vacancy.getWorkConditions() != null) {
+        List<WorkingCondition> workConditions = vacancy.getWorkConditions();
+        for (int j = 0; j < workConditions.size(); j++) {
+          workingConditionsIds.add(workConditions.get(j).getName());
+        }
+        // convert from List to String
+        String stringWorkingConditionsList = Converter.convertListToString(workingConditionsIds);
+        cv.put(WORKING_CONDITIONS + ID, stringWorkingConditionsList);
+      }
+
+      cv.put(SALARY_MIN, vacancy.getSalaryMin());
+      cv.put(SALARY_MAX, vacancy.getSalaryMax());
+
+      cv.put(LAST_PUBLISHED, vacancy.getLastPublished());
+      cv.put(CREATED, vacancy.getCreated());
 
       Cursor cursor = db.rawQuery("SELECT * FROM " + VACANCIES + " WHERE " + ID + " =?", new
           String[]{String.valueOf(vacancy.getId())});
@@ -701,6 +788,29 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     dbReadable.close();
 
     return department;
+  }
+
+  public WorkingCondition getWorkingCondition(String workingConditionId) {
+    WorkingCondition workingCondition = new WorkingCondition();
+
+    SQLiteDatabase dbReadable = this.getReadableDatabase();
+
+    Cursor workCursor = dbReadable.rawQuery(
+        "SELECT * FROM " + WORKING_CONDITIONS + " WHERE " + ID + "=?",
+        new String[]{workingConditionId}
+    );
+    if (workCursor.moveToFirst()) {
+      do {
+
+        workingCondition.setName(workCursor.getString(workCursor.getColumnIndex(NAME)));
+
+      } while (workCursor.moveToNext());
+    }
+
+    workCursor.close();
+    dbReadable.close();
+
+    return workingCondition;
   }
 
   public Cv getCv(String cvId) {
@@ -824,6 +934,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     return requirement;
   }
 
+
   public Vacancy getVacancy(String vacancyId) {
     Vacancy vacancy = new Vacancy();
 
@@ -836,10 +947,31 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     if (vacancyCursor.moveToFirst()) {
       do {
         vacancy.setId(vacancyCursor.getInt(vacancyCursor.getColumnIndex(ID)));
+        vacancy.setTitle(vacancyCursor.getString(vacancyCursor.getColumnIndex(TITLE)));
         vacancy.setName(vacancyCursor.getString(vacancyCursor.getColumnIndex(NAME)));
-        vacancy.setStatus(vacancyCursor.getString(vacancyCursor.getColumnIndex(STATUS)));
-        vacancy.setDateCreated(vacancyCursor.getString(vacancyCursor.getColumnIndex(CREATED)));
-        vacancy.setDateLastPublished(vacancyCursor.getString(vacancyCursor.getColumnIndex(LAST_PUBLISHED)));
+        vacancy.setCity(vacancyCursor.getString(vacancyCursor.getColumnIndex(CITY)));
+        vacancy.setAddress(vacancyCursor.getString(vacancyCursor.getColumnIndex(ADDRESS)));
+
+        if (vacancyCursor.getString(vacancyCursor.getColumnIndex(WORKING_CONDITIONS + ID)) != null) {
+          List<String> workStringList = Converter.convertStringToList(vacancyCursor.getString
+              (vacancyCursor
+                  .getColumnIndex
+                      (WORKING_CONDITIONS+ ID)));
+
+          vacancy.setWorkConditions(getWorkingConditions(workStringList));
+        }
+        vacancy.setSalaryMax(vacancyCursor.getFloat(vacancyCursor.getColumnIndex(SALARY_MAX)));
+        vacancy.setSalaryMin(vacancyCursor.getFloat(vacancyCursor.getColumnIndex(SALARY_MIN)));
+        vacancy.setResponsibilities(vacancyCursor.getString(vacancyCursor.getColumnIndex(RESPONSIBILITIES)));
+        vacancy.setImage(vacancyCursor.getString(vacancyCursor.getColumnIndex(IMAGE)));
+        vacancy.setComments(vacancyCursor.getString(vacancyCursor.getColumnIndex(COMMENT)));
+        vacancy.setWorkingHours(vacancyCursor.getString(vacancyCursor.getColumnIndex(WORKING_HOURS)));
+        vacancy.setCreated(vacancyCursor.getString(vacancyCursor.getColumnIndex(CREATED)));
+        vacancy.setLastPublished(vacancyCursor.getString(vacancyCursor.getColumnIndex(LAST_PUBLISHED)));
+        vacancy.setDiesel(vacancyCursor.getInt(vacancyCursor.getColumnIndex(DIESEL))>0);
+        vacancy.setJobkg(vacancyCursor.getInt(vacancyCursor.getColumnIndex(JOBKG))>0);
+        vacancy.setFacebook(vacancyCursor.getInt(vacancyCursor.getColumnIndex(FACEBOOK))>0);
+
       } while (vacancyCursor.moveToNext());
     }
 
@@ -1098,6 +1230,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       requirements.add(getRequirement(reqStringList.get(i)));
 
     return requirements;
+  }
+
+  private List<WorkingCondition> getWorkingConditions(List<String> worStringList) {
+
+    List<WorkingCondition> workingConditions = new ArrayList<WorkingCondition>();
+    for (int i = 0; i < worStringList.size(); i++)
+      workingConditions.add(getWorkingCondition(worStringList.get(i)));
+
+    return workingConditions;
   }
 
   private List<Criteria> getCriterias(List<String> criteriaStringList) {
@@ -1519,7 +1660,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       int createdIndex = cursor.getColumnIndex(CREATED);
       int lastPublishedIndex = cursor.getColumnIndex(LAST_PUBLISHED);
       int nameIndex = cursor.getColumnIndex(NAME);
-      int statusIndex = cursor.getColumnIndex(STATUS);
+      int titleIndex = cursor.getColumnIndex(TITLE);
+      int addressIndex = cursor.getColumnIndex(ADDRESS);
+      int cityIndex = cursor.getColumnIndex(CITY);
+      int worConsIndex = cursor.getColumnIndex(WORKING_CONDITIONS+ID);
+      int salMaxIndex = cursor.getColumnIndex(SALARY_MAX);
+      int salMinIndex = cursor.getColumnIndex(SALARY_MIN);
+      int resIndex = cursor.getColumnIndex(RESPONSIBILITIES);
+      int imageIndex = cursor.getColumnIndex(IMAGE);
+      int commentIndex = cursor.getColumnIndex(COMMENT);
+      int workingHoursIndex = cursor.getColumnIndex(WORKING_HOURS);
+      int dieselIndex = cursor.getColumnIndex(DIESEL);
+      int jobkgIndex = cursor.getColumnIndex(JOBKG);
+      int facebookIndex = cursor.getColumnIndex(FACEBOOK);
 
       do {
         Vacancy vacancy = new Vacancy();
@@ -1527,14 +1680,40 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         int id = cursor.getInt(idIndex);
         String created = cursor.getString(createdIndex);
         String lastPublished = cursor.getString(lastPublishedIndex);
-        String status = cursor.getString(statusIndex);
         String name = cursor.getString(nameIndex);
+        String title = cursor.getString(titleIndex);
+        String address = cursor.getString(addressIndex);
+        String city = cursor.getString(cityIndex);
+        String worConsIds = cursor.getString(worConsIndex);
+        Float salMax = cursor.getFloat(salMaxIndex);
+        Float salMin = cursor.getFloat(salMinIndex);
+        String res = cursor.getString(resIndex);
+        String image = cursor.getString(imageIndex);
+        String comment = cursor.getString(commentIndex);
+        String workingHours = cursor.getString(workingHoursIndex);
+        Boolean diesel = cursor.getInt(dieselIndex)>0;
+        Boolean jobkg = cursor.getInt(jobkgIndex)> 0;
+        Boolean facebook= cursor.getInt(facebookIndex)>0;
 
-        vacancy.setId(id);
-        vacancy.setDateLastPublished(lastPublished);
-        vacancy.setDateCreated(created);
-        vacancy.setStatus(status);
         vacancy.setName(name);
+        vacancy.setId(id);
+        vacancy.setFacebook(facebook);
+        vacancy.setJobkg(jobkg);
+        vacancy.setDiesel(diesel);
+        vacancy.setWorkingHours(workingHours);
+        vacancy.setImage(image);
+        vacancy.setComments(comment);
+        vacancy.setResponsibilities(res);
+        vacancy.setSalaryMin(salMin);
+        vacancy.setSalaryMax(salMax);
+        vacancy.setTitle(title);
+        vacancy.setAddress(address);
+        vacancy.setCity(city);
+        vacancy.setLastPublished(lastPublished);
+        vacancy.setCreated(created);
+        if (worConsIds != null)
+          vacancy.setWorkConditions(getWorkingConditions(Converter.convertStringToList
+              (worConsIds)));
 
         vacancies.add(vacancy);
 

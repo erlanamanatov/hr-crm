@@ -27,12 +27,16 @@ import com.erkprog.zensofthrcrm.data.entity.Vacancy;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class VacancyDetailFragment extends Fragment implements VacancyDetailContract.View {
 
   private static final String EXTRA_VACANCY_ID = "vacancy_id";
 
   private VacancyDetailContract.Presenter mPresenter;
 
+  @BindView(R.id.recycler_view_all_vacancies)
+  RecyclerView mRecyclerView;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {

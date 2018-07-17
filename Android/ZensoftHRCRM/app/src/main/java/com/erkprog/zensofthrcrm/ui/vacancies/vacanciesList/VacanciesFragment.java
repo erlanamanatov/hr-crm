@@ -97,7 +97,6 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
 
   @Override
   public void showDetailedVacancy(int vacancyId) {
-    Log.d("me", "showDetailedVacancy: ");
     Intent intent = new Intent(getActivity(), VacancyDetail.class);
     intent.putExtra("vacancy_id", vacancyId);
     startActivity(intent);
