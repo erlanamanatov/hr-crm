@@ -38,8 +38,8 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.Vaca
 
     if (vacancy != null) {
       holder.name.setText(vacancy.getName());
-      holder.created.setText(String.format("created: %s", vacancy.getDateCreated()));
-      holder.lastPublish.setText(String.format("last published: %s", vacancy.getDateLastPublished()));
+      holder.created.setText(String.format("created: %s", vacancy.getCreated()));
+      holder.lastPublish.setText(String.format("last published: %s", vacancy.getLastPublished()));
 
       holder.itemView.setOnClickListener(new View.OnClickListener() {
         @Override
