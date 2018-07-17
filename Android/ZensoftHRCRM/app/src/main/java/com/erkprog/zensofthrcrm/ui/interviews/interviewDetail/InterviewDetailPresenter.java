@@ -5,6 +5,10 @@ import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.data.network.ApiInterface;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,13 +28,14 @@ public class InterviewDetailPresenter implements InterviewDetailContract.Present
   }
 
   @Override
-  public void getDetailedInterview(int interviewId) {
+  public void getInterviewInternet(final int interviewId) {
 
     mService.getDetailedInterview(interviewId).enqueue(new Callback<Interview>() {
       @Override
       public void onResponse(Call<Interview> call, Response<Interview> response) {
         if (isViewAttached()) {
           if (response.isSuccessful() && response.body() != null) {
+            mSQLiteHelper.saveInterviews(new ArrayList<Interview>(Arrays.asList(response.body())));
             mView.showInterviewDetails(response.body());
           } else {
             mView.showNoInterviewDetails();
@@ -42,6 +47,7 @@ public class InterviewDetailPresenter implements InterviewDetailContract.Present
       public void onFailure(Call<Interview> call, Throwable t) {
         if (isViewAttached()) {
           mView.showMessage(t.getMessage());
+          getInterviewLocal(interviewId);
         }
       }
     });
@@ -63,4 +69,14 @@ public class InterviewDetailPresenter implements InterviewDetailContract.Present
     mView = null;
   }
 
+
+  @Override
+  public void getInterviewLocal(int interviewId) {
+    Interview interview = mSQLiteHelper.getInterview(String.valueOf(interviewId));
+    if (interview != null) {
+      mView.showInterviewDetails(interview);
+    } else {
+      mView.showNoInterviewDetails();
+    }
+  }
 }

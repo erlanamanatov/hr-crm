@@ -1,37 +1,29 @@
-package com.erkprog.zensofthrcrm.ui.interviews.interviewsList;
+package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.editCandidate;
 
 import android.content.Context;
 
+import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.ui.BaseView;
 import com.erkprog.zensofthrcrm.ui.ILifecycle;
 
 import java.util.List;
 
-public interface InterviewsContract {
+public interface EditCandidateContract extends BaseView {
 
   interface View extends BaseView {
 
-    void showInterviews(List<Interview> interviews);
-
     void showMessage(String t);
 
-    void showInterviewDetailUi(int interviewId);
-
     void showProgress();
+
+    void onFinishedRequest(int candidateId);
 
   }
 
   interface Presenter extends ILifecycle<View> {
 
-
-    // ?? void onRefreshData();
-    void onInterviewItemClick(Interview interview);
-
-    void getInterviewsInternet();
-
-    void getInterviewsLocal();
-
+    void updateCadidate(Candidate candidate);
 
   }
 

@@ -13,21 +13,33 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.ui.ItemClickListener;
-import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetail;
 import com.erkprog.zensofthrcrm.ui.interviews.interviewDetail.InterviewDetail;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class InterviewsFragment extends Fragment implements InterviewsContract.View,
     ItemClickListener<Interview> {
 
   private InterviewsContract.Presenter mPresenter;
-  private RecyclerView mRecyclerView;
+
+  @BindView(R.id.recycler_view_all_interviews)
+  RecyclerView mRecyclerView;
+  @BindView(R.id.interviews_progress_bar)
+  ProgressBar mProgressBar;
+  @BindView(R.id.txt_empty_interviews_view)
+  TextView noInterviewsView;
+
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +47,8 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
     mPresenter = new InterviewsPresenter(this, CRMApplication.getInstance(requireContext())
         .getApiService(), CRMApplication.getInstance(requireContext()).getSQLiteHelper());
     mPresenter.bind(this);
+
+
   }
 
 
@@ -49,10 +63,13 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_interviews_list, container, false);
 
+    ButterKnife.bind(this, v);
+
     mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_all_interviews);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
     mRecyclerView.setLayoutManager(layoutManager);
 
+    showProgress();
     if (hasInternetConnection(v.getContext())) {
       mPresenter.getInterviewsInternet();
     } else {
@@ -61,34 +78,28 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
     return v;
   }
 
-
-  @Override
-  public void hideProgress() {
-  }
-
-
-  @Override
-  public void showProgress() {
-
-  }
-
   @Override
   public void dismissProgress() {
-
+    mProgressBar.setVisibility(View.GONE);
   }
 
 
   @Override
   public void showInterviews(List<Interview> interviews) {
+    dismissProgress();
 
-    InterviewsAdapter adapter = new InterviewsAdapter(interviews, this);
-    mRecyclerView.setAdapter(adapter);
-
+    if (interviews.size() > 0) {
+      noInterviewsView.setVisibility(View.GONE);
+      InterviewsAdapter adapter = new InterviewsAdapter(interviews, this);
+      mRecyclerView.setAdapter(adapter);
+    } else
+      noInterviewsView.setVisibility(View.VISIBLE);
   }
 
   @Override
-  public void showMessage(String t) {
-
+  public void showMessage(String message) {
+    dismissProgress();
+    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
   }
 
   @Override
@@ -110,8 +121,8 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
   }
 
   @Override
-  public void showNoInterviews() {
-
+  public void showProgress() {
+    mProgressBar.setVisibility(View.VISIBLE);
   }
 
   @Override
