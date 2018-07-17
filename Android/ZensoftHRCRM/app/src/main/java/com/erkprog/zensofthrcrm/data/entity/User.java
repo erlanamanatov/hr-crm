@@ -2,7 +2,9 @@ package com.erkprog.zensofthrcrm.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
   private Integer id;
   private String email;
   @SerializedName("first_name")

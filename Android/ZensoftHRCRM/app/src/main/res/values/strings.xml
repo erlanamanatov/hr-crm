@@ -40,4 +40,10 @@
   <string name="candidates_response_null">Candidates list in response is null</string>
   <string name="requests_null">Requests list in response is null</string>
   <string name="vacancies_null">Vacancies list in response is null</string>
+  <string name="created_by">Created by</string>
+  <string name="count">count</string>
+  <string name="requirements">requirements</string>
+  <string name="modified">modified</string>
+  <string name="response_not_successfull">Response is not successfull</string>
+  <string name="create_vacancy">Create vacancy</string>
 </resources>

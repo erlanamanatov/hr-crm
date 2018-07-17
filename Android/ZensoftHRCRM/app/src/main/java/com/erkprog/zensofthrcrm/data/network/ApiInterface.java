@@ -5,6 +5,7 @@ import com.erkprog.zensofthrcrm.data.entity.CandidatesResponse;
 import com.erkprog.zensofthrcrm.data.entity.CriteriasResponse;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.data.entity.InterviewsResponse;
+import com.erkprog.zensofthrcrm.data.entity.Request;
 import com.erkprog.zensofthrcrm.data.entity.RequestsResponse;
 import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 
@@ -31,4 +32,8 @@ public interface ApiInterface {
 
   @GET("requests")
   Call<RequestsResponse> getRequests();
+
+  @GET("requests/{id}")
+  Call<Request> getDetailedRequest(@Path("id") int id);
+
 }

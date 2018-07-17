@@ -12,6 +12,7 @@ public interface RequestsContract {
 
     void showRequests(List<Request> requests);
 
+    void showRequestDetails(Request request);
   }
 
   interface Presenter extends ILifecycle<View> {

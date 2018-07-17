@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+      <TextView
+          android:id="@+id/req_detail_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingLeft="@dimen/requst_detail_padding"
+          android:paddingTop="20dp"
+          android:textSize="20sp"
+          android:textColor="@color/colorBlack"
+          android:textStyle="bold"
+          tools:text="Name"/>
+
+      <android.support.constraint.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/req_detail_department"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorDarkGrey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView12"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="dep name"/>
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/requst_detail_padding"
+            android:layout_marginTop="8dp"
+            android:text="@string/department"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+      </android.support.constraint.ConstraintLayout>
+
+      <android.support.constraint.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/requst_detail_padding"
+            android:layout_marginTop="8dp"
+            android:text="@string/created_by"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/req_detail_created_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorDarkGrey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView13"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="created by"/>
+      </android.support.constraint.ConstraintLayout>
+
+      <android.support.constraint.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/requst_detail_padding"
+            android:layout_marginTop="8dp"
+            android:text="@string/count"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/req_detail_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorDarkGrey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView14"
+            app:layout_constraintTop_toTopOf="parent"/>
+      </android.support.constraint.ConstraintLayout>
+
+      <android.support.constraint.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/requst_detail_padding"
+            android:layout_marginTop="8dp"
+            android:text="@string/status"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/req_detail_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorDarkGrey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView15"
+            app:layout_constraintTop_toTopOf="parent"/>
+      </android.support.constraint.ConstraintLayout>
+
+      <android.support.constraint.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/requst_detail_padding"
+            android:layout_marginTop="8dp"
+            android:text="@string/requirements"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/req_detail_requirements"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorDarkGrey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView16"
+            app:layout_constraintTop_toTopOf="parent"/>
+      </android.support.constraint.ConstraintLayout>
+
+      <android.support.constraint.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/requst_detail_padding"
+            android:layout_marginTop="8dp"
+            android:text="@string/created"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/req_detail_created"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorDarkGrey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView17"
+            app:layout_constraintTop_toTopOf="parent"/>
+      </android.support.constraint.ConstraintLayout>
+
+      <android.support.constraint.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/requst_detail_padding"
+            android:layout_marginTop="8dp"
+            android:text="@string/modified"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/req_detail_modified"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorDarkGrey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView18"
+            app:layout_constraintTop_toTopOf="parent"/>
+      </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+  </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

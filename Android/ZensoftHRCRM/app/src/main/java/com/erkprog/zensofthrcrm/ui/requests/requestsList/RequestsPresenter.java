@@ -51,7 +51,30 @@ public class RequestsPresenter implements RequestsContract.Presenter {
 
   @Override
   public void onRequestItemClick(Request request) {
-    //TODO: implement mView.createVacancy() here
+    mView.showProgress();
+    mApiService.getDetailedRequest(request.getId()).enqueue(new Callback<Request>() {
+      @Override
+      public void onResponse(Call<Request> call, Response<Request> response) {
+        if (isViewAttached()){
+          mView.dismissProgress();
+          if (response.isSuccessful()){
+            Request detailedRequest = response.body();
+            mView.showRequestDetails(detailedRequest);
+          } else {
+            mView.showMessage(mContext.getString(R.string.response_not_successfull));
+          }
+        }
+      }
+
+      @Override
+      public void onFailure(Call<Request> call, Throwable t) {
+        if (isViewAttached()) {
+          mView.dismissProgress();
+          mView.showMessage(t.getMessage());
+        }
+
+      }
+    });
   }
 
   private boolean isViewAttached() {
