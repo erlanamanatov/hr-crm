@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Interview {
   private Integer id;
+  @SerializedName("begin_time")
   private String date;
   private String status;
   private Candidate candidate;

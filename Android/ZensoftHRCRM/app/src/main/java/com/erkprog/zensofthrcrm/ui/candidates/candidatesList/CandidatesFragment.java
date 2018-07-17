@@ -2,6 +2,8 @@ package com.erkprog.zensofthrcrm.ui.candidates.candidatesList;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -49,8 +51,9 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   }
 
   private void initPresenter() {
-    mPresenter = new CandidatesPresenter(requireContext(),
-        CRMApplication.getInstance(requireContext()).getApiService());
+    mPresenter = new CandidatesPresenter(this,
+        CRMApplication.getInstance(requireContext()).getApiService(),CRMApplication.getInstance
+        (requireContext()).getSQLiteHelper());
     mPresenter.bind(this);
   }
 
@@ -69,7 +72,12 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    mPresenter.loadCandidates();
+    showProgress();
+    if (hasInternetConnection(view.getContext())) {
+      mPresenter.getCandidatesInternet();
+    } else {
+      mPresenter.getCandidatesLocal();
+    }
   }
 
   private void initRecyclerView(View v) {
@@ -79,6 +87,7 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
 
   @Override
   public void showCandidates(List<Candidate> candidates) {
+    dismissProgress();
     if (candidates.size() > 0) {
       mAdapter = new CandidatesAdapter(candidates, this);
       mRecyclerView.setAdapter(mAdapter);
@@ -100,8 +109,13 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
 
   @Override
   public boolean hasInternetConnection(Context context) {
-    return false;
-  }
+    ConnectivityManager connectivityManager
+        = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    if (connectivityManager != null) {
+      NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+      return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+    return false;  }
 
   @Override
   public void showProgress() {
