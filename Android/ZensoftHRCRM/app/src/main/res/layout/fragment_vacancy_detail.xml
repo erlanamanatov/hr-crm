@@ -30,56 +30,181 @@
           android:orientation="vertical">
 
         <TextView
-            android:id="@+id/i_initial_label"
+            android:id="@+id/v_name_label"
             android:layout_width="match_parent"
             android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
             android:layout_height="wrap_content"
-            android:text="@string/initials_label"/>
+            android:text="@string/name_label"/>
 
         <TextView
-            android:id="@+id/i_initial"
+            android:id="@+id/v_name"
             android:textSize="@dimen/main_attributes"
             android:layout_marginStart="8dp"
             android:textColor="@color/colorBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="@string/initial"/>
-
+            tools:text="@string/name"/>
         <TextView
-            android:id="@+id/i_department_label"
+            android:id="@+id/v_title_label"
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
             android:layout_height="wrap_content"
-            android:text="@string/department"/>
+            android:text="@string/title_label"/>
 
         <TextView
-            android:id="@+id/i_department"
-            android:textSize="@dimen/main_attributes"
-            android:textColor="@color/colorBlack"
-            android:layout_width="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_height="wrap_content"
-            tools:text="@string/department"/>
-
-        <TextView
-            android:id="@+id/i_date_label"
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="8dp"
-            android:layout_height="wrap_content"
-            android:text="@string/date"/>
-
-        <TextView
-            android:id="@+id/i_date"
+            android:id="@+id/v_title"
             android:textSize="@dimen/main_attributes"
             android:layout_marginStart="8dp"
             android:textColor="@color/colorBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="@string/date"/>
+            tools:text="@string/title"/>
+        <TextView
+            android:id="@+id/v_city_label"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
+            android:text="@string/city_label"/>
 
+        <TextView
+            android:id="@+id/v_city"
+            android:textSize="@dimen/main_attributes"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/city"/>
+        <TextView
+            android:id="@+id/v_address_label"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
+            android:text="@string/address_label"/>
+
+        <TextView
+            android:id="@+id/v_address"
+            android:textSize="@dimen/main_attributes"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/address"/>
+        <TextView
+            android:id="@+id/v_work_conditions_label"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
+            android:text="@string/work_conditions_label"/>
+
+        <TextView
+            android:id="@+id/v_work_conditions"
+            android:textSize="@dimen/main_attributes"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/work_conditions"/>
+        <TextView
+            android:id="@+id/v_working_hours_label"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
+            android:text="@string/working_hours_label"/>
+
+        <TextView
+            android:id="@+id/v_working_hours"
+            android:textSize="@dimen/main_attributes"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/working_hours"/>
+        <TextView
+            android:id="@+id/v_salary_min_label"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
+            android:text="@string/salary_min_label"/>
+
+        <TextView
+            android:id="@+id/v_salary_min"
+            android:textSize="@dimen/main_attributes"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/salary_min"/>
+        <TextView
+            android:id="@+id/v_salary_max_label"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
+            android:text="@string/salary_max_label"/>
+
+        <TextView
+            android:id="@+id/v_salary_max"
+            android:textSize="@dimen/main_attributes"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/salary_max"/>
+        <TextView
+            android:id="@+id/v_comments_label"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
+            android:text="@string/comments_label"/>
+
+        <TextView
+            android:id="@+id/v_comments"
+            android:textSize="@dimen/main_attributes"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/vcomments"/>
+        <TextView
+            android:id="@+id/v_created_label"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
+            android:text="@string/created_label"/>
+
+        <TextView
+            android:id="@+id/v_created"
+            android:textSize="@dimen/main_attributes"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/vcreated"/>
+        <TextView
+            android:id="@+id/v_last_published_label"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
+            android:text="@string/last_published_label"/>
+
+        <TextView
+            android:id="@+id/v_last_published"
+            android:textSize="@dimen/main_attributes"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/vlast_published"/>
       </LinearLayout>
     </android.support.v7.widget.CardView>
 
