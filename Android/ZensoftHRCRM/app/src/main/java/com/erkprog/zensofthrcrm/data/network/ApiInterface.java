@@ -33,7 +33,7 @@ public interface ApiInterface {
   Call<Vacancy> getDetailedVacancy(@Path("id") int id);
 
   @GET("interviews")
-  Observable<InterviewsResponse> getInterviews();
+  Single<InterviewsResponse> getInterviews();
 
   @PATCH("candidates/{id}")
   Completable updateCandidates(@Path("id") int id, @Header("Content-Type") String content_type,
