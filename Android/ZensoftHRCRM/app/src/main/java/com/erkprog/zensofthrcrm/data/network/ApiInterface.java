@@ -42,5 +42,5 @@ public interface ApiInterface {
   Single<VacanciesResponse> getVacancies();
 
   @GET("requests")
-  Call<RequestsResponse> getRequests();
+  Single<RequestsResponse> getRequests();
 }

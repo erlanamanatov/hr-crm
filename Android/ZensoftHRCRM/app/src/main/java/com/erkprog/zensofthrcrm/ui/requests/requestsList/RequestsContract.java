@@ -16,7 +16,10 @@ public interface RequestsContract {
 
   interface Presenter extends ILifecycle<View> {
 
-    void loadData();
+
+    void getRequestsInternet();
+
+    void getRequestsLocal();
 
     void onRequestItemClick(Request request);
   }

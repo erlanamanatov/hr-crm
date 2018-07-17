@@ -275,6 +275,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
   }
 
   public void saveRequests(List<Request> requests) {
+
+    for (int i = 0; i < requests.size(); i++) {
+
+      savePositions(new ArrayList<Position>(Arrays.asList(requests.get(i)
+          .getPosition())));
+
+     }
+
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues cv = new ContentValues();
 
@@ -366,6 +374,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 
   public void savePositions(List<Position> positions) {
+    for (int i = 0; i < positions.size(); i++) {
+
+      saveDepartments(new ArrayList<Department>(Arrays.asList(positions.get(i)
+          .getDepartment())));
+
+    }
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues cv = new ContentValues();
 
