@@ -2,6 +2,7 @@ package com.erkprog.zensofthrcrm;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
@@ -26,6 +27,7 @@ import com.erkprog.zensofthrcrm.ui.vacancies.vacanciesList.VacanciesFragment;
 
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity
   CircleImageView userImage;
   TextView userName;
   TextView userEmail;
+
+  boolean doubleBackToExitPressedOnce = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +101,21 @@ public class MainActivity extends AppCompatActivity
     if (drawer.isDrawerOpen(GravityCompat.START)) {
       drawer.closeDrawer(GravityCompat.START);
     } else {
-      super.onBackPressed();
+
+      if (doubleBackToExitPressedOnce) {
+        super.onBackPressed();
+      }
+
+      this.doubleBackToExitPressedOnce = true;
+      Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+      new Handler().postDelayed(new Runnable() {
+
+        @Override
+        public void run() {
+          doubleBackToExitPressedOnce = false;
+        }
+      }, 2000);
     }
   }
 

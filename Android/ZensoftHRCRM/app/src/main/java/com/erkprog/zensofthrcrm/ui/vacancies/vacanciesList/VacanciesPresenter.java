@@ -63,14 +63,14 @@ public class VacanciesPresenter implements VacanciesContract.Presenter {
 
   @Override
   public void getVacanciesLocal() {
-    List<Vacancy> vacancies= mSQLiteHelper.getVacancies();
-    if(vacancies != null)
+    List<Vacancy> vacancies = mSQLiteHelper.getVacancies();
+    if (vacancies != null)
       mView.showVacancies(vacancies);
   }
 
   @Override
   public void onVacancyItemClick(Vacancy vacancy) {
-    mView.showDetailedVacancy(vacancy.getId());
+//    mView.showDetailedVacancy(vacancy.getId());
   }
 
   private boolean isViewAttached() {
