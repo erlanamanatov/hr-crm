@@ -64,7 +64,7 @@ public class RequestDetailFragment extends DialogFragment {
       modified.setText(mRequest.getModified());
     }
 
-    return new AlertDialog.Builder(getActivity())
+    final AlertDialog dialog = new AlertDialog.Builder(getActivity())
         .setView(v)
         .setPositiveButton(R.string.create_vacancy, new DialogInterface.OnClickListener() {
           @Override
@@ -73,6 +73,17 @@ public class RequestDetailFragment extends DialogFragment {
           }
         })
         .create();
+
+    dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+      @Override
+      public void onShow(DialogInterface arg0) {
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources()
+            .getColor(R.color.colorAccent));
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextSize(14);
+      }
+    });
+
+    return dialog;
   }
 
   private String getDisplayRequirements(List<Requirement> list) {
