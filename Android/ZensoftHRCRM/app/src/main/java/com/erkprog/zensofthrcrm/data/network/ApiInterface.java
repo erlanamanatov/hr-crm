@@ -10,6 +10,7 @@ import com.erkprog.zensofthrcrm.data.entity.RequestsResponse;
 import com.erkprog.zensofthrcrm.data.entity.UsersResponse;
 import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
+import com.erkprog.zensofthrcrm.data.entity.VacancyRequest;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
@@ -40,7 +41,7 @@ public interface ApiInterface {
   Single<InterviewsResponse> getInterviews();
 
   @PATCH("candidates/{id}")
-  Completable updateCandidates(@Path("id") int id, @Header("Content-Type") String content_type,
+  Completable updateCandidates(@Path("id") int id, @Header("Content-Type") String contentType,
                                @Body Candidate candidate);
 
   @GET("vacancies?size=100")
@@ -54,11 +55,14 @@ public interface ApiInterface {
 
   //create new interview
   @POST("interviews")
-  Call<Interview> postInterview(@Header("Content-Type") String content_type,
+  Call<Interview> postInterview(@Header("Content-Type") String contentType,
                                 @Body InterviewRequest request);
 
   @GET("requests?size=100")
   Single<RequestsResponse> getRequests();
 
 
+  @POST("vacancies")
+  Call<Vacancy> postVacancy(@Header("Content-Type") String contentType,
+                            @Body VacancyRequest request);
 }
