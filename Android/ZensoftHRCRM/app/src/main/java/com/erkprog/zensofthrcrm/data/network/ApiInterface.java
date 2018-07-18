@@ -24,7 +24,7 @@ import retrofit2.http.Path;
 
 public interface ApiInterface {
 
-  @GET("candidates")
+  @GET("candidates?size=100")
   Single<CandidatesResponse> getCandidates();
 
   @GET("candidates/{id}")
@@ -36,20 +36,20 @@ public interface ApiInterface {
   @GET("vacancies/{id}")
   Call<Vacancy> getDetailedVacancy(@Path("id") int id);
 
-  @GET("interviews")
+  @GET("interviews?size=100")
   Single<InterviewsResponse> getInterviews();
 
   @PATCH("candidates/{id}")
   Completable updateCandidates(@Path("id") int id, @Header("Content-Type") String content_type,
                                @Body Candidate candidate);
 
-  @GET("vacancies")
+  @GET("vacancies?size=100")
   Single<VacanciesResponse> getVacancies();
 
   @GET("requests/{id}")
   Call<Request> getDetailedRequest(@Path("id") int id);
 
-  @GET("users")
+  @GET("users?size=100")
   Call<UsersResponse> getUsers();
 
   //create new interview
@@ -57,6 +57,6 @@ public interface ApiInterface {
   Call<Interview> postInterview(@Header("Content-Type") String content_type,
                                 @Body InterviewRequest request);
 
-  @GET("requests")
+  @GET("requests?size=100")
   Single<RequestsResponse> getRequests();
 }
