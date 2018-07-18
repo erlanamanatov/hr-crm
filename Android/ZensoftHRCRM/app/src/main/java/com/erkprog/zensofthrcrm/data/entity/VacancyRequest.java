@@ -13,13 +13,13 @@ public class VacancyRequest {
   private String city;
   private String address;
   @SerializedName("work_conditions")
-  private List<String> work_conditions;
+  private List<String> workConditions;
   private String responsibilities;
   private String comments;
   @SerializedName("salary_min")
-  private Integer salary_min;
+  private Integer salaryMin;
   @SerializedName("salary_max")
-  private Integer salary_max;
+  private Integer salaryMax;
   @SerializedName("created_by")
   private Integer createdBy;
 
@@ -34,11 +34,11 @@ public class VacancyRequest {
     requirements.add(2);
     List<String> s = new ArrayList<>();
     s.add("dfsdfsd");
-    work_conditions = s;
+    workConditions = s;
     responsibilities = "fff";
     comments = "no comments";
-    salary_min = 0;
-    salary_max = 10000;
+    salaryMin = 0;
+    salaryMax = 10000;
     createdBy = 2;
   }
 
@@ -51,12 +51,25 @@ public class VacancyRequest {
     requirements.add(1);
     List<String> s = new ArrayList<>();
     s.add("Two toilets for 100 people");
-    work_conditions = s;
+    workConditions = s;
     responsibilities = "Work on long-term startup projects";
     comments = "Lorem ipsum";
-    salary_min = 200;
-    salary_max = 500;
+    salaryMin = 200;
+    salaryMax = 500;
     createdBy = 1;
+  }
+
+  private VacancyRequest(Builder builder) {
+    this.request = builder.requestId;
+    this.createdBy = builder.createdById;
+    this.title = builder.title;
+    this.city = builder.city;
+    this.address = builder.address;
+    this.workConditions = builder.workingConditions;
+    this.responsibilities = builder.responsibilities;
+    this.salaryMin = builder.salaryMin;
+    this.salaryMax = builder.salaryMax;
+    this.comments = builder.comments;
   }
 
   public String getTitle() {
@@ -99,12 +112,12 @@ public class VacancyRequest {
     this.address = address;
   }
 
-  public List<String> getWork_conditions() {
-    return work_conditions;
+  public List<String> getWorkConditions() {
+    return workConditions;
   }
 
-  public void setWork_conditions(List<String> work_conditions) {
-    this.work_conditions = work_conditions;
+  public void setWorkConditions(List<String> workConditions) {
+    this.workConditions = workConditions;
   }
 
   public String getResponsibilities() {
@@ -123,20 +136,20 @@ public class VacancyRequest {
     this.comments = comments;
   }
 
-  public Integer getSalary_min() {
-    return salary_min;
+  public Integer getSalaryMin() {
+    return salaryMin;
   }
 
-  public void setSalary_min(Integer salary_min) {
-    this.salary_min = salary_min;
+  public void setSalaryMin(Integer salaryMin) {
+    this.salaryMin = salaryMin;
   }
 
-  public Integer getSalary_max() {
-    return salary_max;
+  public Integer getSalaryMax() {
+    return salaryMax;
   }
 
-  public void setSalary_max(Integer salary_max) {
-    this.salary_max = salary_max;
+  public void setSalaryMax(Integer salaryMax) {
+    this.salaryMax = salaryMax;
   }
 
   public Integer getCreatedBy() {
@@ -145,5 +158,88 @@ public class VacancyRequest {
 
   public void setCreatedBy(Integer createdBy) {
     this.createdBy = createdBy;
+  }
+
+  @Override
+  public String toString() {
+    return "VacancyRequest{" +
+        "title='" + title + '\'' +
+        ", request=" + request +
+        ", city='" + city + '\'' +
+        ", address='" + address + '\'' +
+        ", workConditions=" + workConditions +
+        ", responsibilities='" + responsibilities + '\'' +
+        ", comments='" + comments + '\'' +
+        ", salaryMin=" + salaryMin +
+        ", salaryMax=" + salaryMax +
+        ", createdBy=" + createdBy +
+        '}';
+  }
+
+  public static class Builder {
+    private int requestId;
+    private int createdById;
+    private String title;
+    private String city;
+    private String address;
+    private List<String> workingConditions;
+    private String responsibilities;
+    private int salaryMin;
+    private int salaryMax;
+    private String comments;
+
+    public Builder setRequestId(int id) {
+      this.requestId = id;
+      return this;
+    }
+
+    public Builder setCreatedBy(int id) {
+      this.createdById = id;
+      return this;
+    }
+
+    public Builder setTitle(String title) {
+      this.title = title;
+      return this;
+    }
+
+    public Builder setCity(String city) {
+      this.city = city;
+      return this;
+    }
+
+    public Builder setAddress(String address) {
+      this.address = address;
+      return this;
+    }
+
+    public Builder setResponsibilities(String responsibilities) {
+      this.responsibilities = responsibilities;
+      return this;
+    }
+
+    public Builder setComments(String comments) {
+      this.comments = comments;
+      return this;
+    }
+
+    public Builder setWorkingConditions(List<String> workingConditions) {
+      this.workingConditions = workingConditions;
+      return this;
+    }
+
+    public Builder setSalaryMin(int min) {
+      this.salaryMin = min;
+      return this;
+    }
+
+    public Builder setSalaryMax(int max) {
+      this.salaryMax = max;
+      return this;
+    }
+
+    public VacancyRequest build() {
+      return new VacancyRequest(this);
+    }
   }
 }
