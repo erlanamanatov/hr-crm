@@ -1,9 +1,13 @@
 package com.erkprog.zensofthrcrm.ui.vacancies.vacanciesList;
 
+import android.util.Log;
+
 import com.erkprog.zensofthrcrm.data.db.SQLiteHelper;
 import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
+import com.erkprog.zensofthrcrm.data.entity.VacancyRequest;
 import com.erkprog.zensofthrcrm.data.network.ApiInterface;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -11,8 +15,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class VacanciesPresenter implements VacanciesContract.Presenter {
+
+  private static final String TAG = "VacanciesPresenter";
 
   private VacanciesContract.View mView;
   private ApiInterface mService;

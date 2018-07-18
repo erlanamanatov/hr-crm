@@ -29,7 +29,7 @@ public class CreateVacancyFragment extends Fragment implements CreateVacancyCont
 
   private TextView requirements;
   private EditText title;
-  private EditText name;
+  private TextView name;
   private EditText city;
   private EditText address;
   private EditText workConditions;

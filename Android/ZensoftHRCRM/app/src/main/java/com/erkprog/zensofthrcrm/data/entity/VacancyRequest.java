@@ -8,12 +8,10 @@ import java.util.List;
 public class VacancyRequest {
 
   private String title;
-  private String name;
   private Integer request;
   private String image;
   private String city;
   private String address;
-  private List<Integer> requirements;
   @SerializedName("work_conditions")
   private List<String> work_conditions;
   private String responsibilities;
@@ -22,21 +20,18 @@ public class VacancyRequest {
   private Integer salary_min;
   @SerializedName("salary_max")
   private Integer salary_max;
-  private String created;
   @SerializedName("created_by")
-  private Integer created_by;
+  private Integer createdBy;
 
   public VacancyRequest(String image) {
     this.image = image;
     this.title = "Test title";
-    this.name = "Some name";
     this.request = 1;
     this.city = "Chelyabinsk";
     this.address = "dom na gore";
     List<Integer> requirements = new ArrayList<>();
     requirements.add(1);
     requirements.add(2);
-    this.requirements = requirements;
     List<String> s = new ArrayList<>();
     s.add("dfsdfsd");
     work_conditions = s;
@@ -44,29 +39,24 @@ public class VacancyRequest {
     comments = "no comments";
     salary_min = 0;
     salary_max = 10000;
-    created = "2018-07-13T16:10:02.060278+06:00";
-    created_by = 2;
+    createdBy = 2;
   }
 
   public VacancyRequest() {
-    this.title = "Some title";
-    this.name = "Python developer";
-    this.request = 1;
+    this.title = "Interns required";
+    this.request = 2;
     this.city = "Bishkek";
     this.address = "dom na gore";
     List<Integer> requirements = new ArrayList<>();
     requirements.add(1);
-    requirements.add(2);
-    this.requirements = requirements;
     List<String> s = new ArrayList<>();
-    s.add("dfsdfsd");
+    s.add("Two toilets for 100 people");
     work_conditions = s;
-    responsibilities = " ";
-    comments = "no comments";
-    salary_min = 0;
-    salary_max = 10000;
-    created = "2018-07-13T16:10:02.060278+06:00";
-    created_by = 1;
+    responsibilities = "Work on long-term startup projects";
+    comments = "Lorem ipsum";
+    salary_min = 200;
+    salary_max = 500;
+    createdBy = 1;
   }
 
   public String getTitle() {
@@ -75,14 +65,6 @@ public class VacancyRequest {
 
   public void setTitle(String title) {
     this.title = title;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public Integer getRequest() {
@@ -115,14 +97,6 @@ public class VacancyRequest {
 
   public void setAddress(String address) {
     this.address = address;
-  }
-
-  public List<Integer> getRequirements() {
-    return requirements;
-  }
-
-  public void setRequirements(List<Integer> requirements) {
-    this.requirements = requirements;
   }
 
   public List<String> getWork_conditions() {
@@ -165,19 +139,11 @@ public class VacancyRequest {
     this.salary_max = salary_max;
   }
 
-  public String getCreated() {
-    return created;
+  public Integer getCreatedBy() {
+    return createdBy;
   }
 
-  public void setCreated(String created) {
-    this.created = created;
-  }
-
-  public Integer getCreated_by() {
-    return created_by;
-  }
-
-  public void setCreated_by(Integer created_by) {
-    this.created_by = created_by;
+  public void setCreatedBy(Integer createdBy) {
+    this.createdBy = createdBy;
   }
 }

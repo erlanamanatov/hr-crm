@@ -48,14 +48,12 @@
           android:textColor="@color/createVacancyLabel"
           android:textStyle="bold"/>
 
-      <EditText
+      <TextView
           android:id="@+id/cr_vac_name"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:ems="10"
-          android:hint="Add name"
-          android:inputType="textMultiLine"
-          />
+          android:text="@string/name"
+          android:textColor="@color/createVacancyLabel"/>
 
       <TextView
           android:id="@+id/textView11"
