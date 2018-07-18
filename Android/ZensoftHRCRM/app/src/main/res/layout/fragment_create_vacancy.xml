@@ -174,7 +174,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/cr_vac_min_salary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -195,7 +195,7 @@
           android:layout_height="match_parent">
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/cr_vac_max_salary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -224,6 +224,34 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
       </android.support.constraint.ConstraintLayout>
+
+      <TextView
+          android:id="@+id/textView26"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/created_by"
+          android:textColor="@color/createVacancyLabel"
+          android:textStyle="bold"/>
+
+      <TextView
+          android:id="@+id/cr_vac_created_by"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textColor="@color/colorBlack"/>
+
+      <TextView
+          android:id="@+id/textView27"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/created"
+          android:textColor="@color/createVacancyLabel"
+          android:textStyle="bold"/>
+
+      <TextView
+          android:id="@+id/cr_vac_created"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textColor="@color/colorBlack"/>
 
       <View
           android:id="@+id/view3"

@@ -17,21 +17,27 @@ public class CreateVacancy extends AppCompatActivity {
   private static final String EXTRA_REQUEST = "EXTRA REQUEST";
   private static final String EXTRA_VACANCY = "EXTRA VACANCY";
 
+  private Request mRequest;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_create_vacancy);
 
     if (getIntent() != null) {
-      Request request = (Request) getIntent().getSerializableExtra(EXTRA_REQUEST);
-      Log.d(TAG, "onCreate: " + request.getPosition().getName());
+      mRequest = (Request) getIntent().getSerializableExtra(EXTRA_REQUEST);
+      Log.d(TAG, "onCreate: " + mRequest.getPosition().getName());
     }
 
     FragmentManager fm = getSupportFragmentManager();
     Fragment fragment = fm.findFragmentById(R.id.create_vacancy_fragment_container);
 
     if (fragment == null) {
-      fragment = CreateVacancyFragment.newInstance();
+      if (mRequest != null) {
+        fragment = CreateVacancyFragment.newInstance(mRequest);
+      } else {
+        fragment = new CreateVacancyFragment();
+      }
 //      fragment.setArguments(args);
       fm.beginTransaction()
           .add(R.id.create_vacancy_fragment_container, fragment)

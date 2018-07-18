@@ -50,21 +50,13 @@
         <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
       </intent-filter>
     </service>
+
     <service android:name=".firebase.MyMessagingService">
       <intent-filter>
         <action android:name="com.google.firebase.MESSAGING_EVENT"/>
       </intent-filter>
     </service>
 
-    <activity
-        android:name=".ui.LoginActivity"
-        android:theme="@style/AppTheme.NoActionBar">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
-    </activity>
     <activity android:name=".ui.vacancies.createVacancy.CreateVacancy">
     </activity>
   </application>
