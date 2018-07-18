@@ -27,9 +27,8 @@ public class RequestsPresenter implements RequestsContract.Presenter {
   private SQLiteHelper mSQLiteHelper;
   private CompositeDisposable disposable = new CompositeDisposable();
 
-  RequestsPresenter(RequestsContract.View view, ApiInterface service, SQLiteHelper
+  RequestsPresenter(ApiInterface service, SQLiteHelper
       sqliteHelper) {
-    mView = view;
     mService = service;
     mSQLiteHelper = sqliteHelper;
   }

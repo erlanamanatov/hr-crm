@@ -47,7 +47,7 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
   }
 
   private void initPresenter() {
-    mPresenter = new RequestsPresenter(this,
+    mPresenter = new RequestsPresenter(
         CRMApplication.getInstance(requireContext()).getApiService(), CRMApplication.getInstance
         (requireContext()).getSQLiteHelper());
     mPresenter.bind(this);

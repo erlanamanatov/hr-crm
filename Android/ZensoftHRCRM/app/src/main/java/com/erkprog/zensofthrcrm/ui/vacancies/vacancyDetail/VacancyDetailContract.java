@@ -9,7 +9,7 @@ public interface VacancyDetailContract extends BaseView {
 
   public interface View extends BaseView {
 
-    void showVacancyDetails(Vacancy Vacancy);
+    void showVacancyDetails(Vacancy vacancy);
 
   }
 

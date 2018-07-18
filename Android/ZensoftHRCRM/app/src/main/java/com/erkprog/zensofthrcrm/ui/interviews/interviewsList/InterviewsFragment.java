@@ -44,7 +44,7 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mPresenter = new InterviewsPresenter(this, CRMApplication.getInstance(requireContext())
+    mPresenter = new InterviewsPresenter(CRMApplication.getInstance(requireContext())
         .getApiService(), CRMApplication.getInstance(requireContext()).getSQLiteHelper());
     mPresenter.bind(this);
 

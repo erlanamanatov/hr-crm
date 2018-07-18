@@ -52,7 +52,7 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
   }
 
   private void initPresenter() {
-    mPresenter = new VacanciesPresenter(this, CRMApplication.getInstance(requireContext())
+    mPresenter = new VacanciesPresenter(CRMApplication.getInstance(requireContext())
         .getApiService(), CRMApplication.getInstance(requireContext()).getSQLiteHelper());
     mPresenter.bind(this);
   }

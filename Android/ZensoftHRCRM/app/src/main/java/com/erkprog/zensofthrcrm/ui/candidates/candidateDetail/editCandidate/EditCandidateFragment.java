@@ -64,7 +64,7 @@ public class EditCandidateFragment extends Fragment implements EditCandidateCont
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mPresenter = new EditCandidatePresenter(this, CRMApplication.getInstance(requireContext())
+    mPresenter = new EditCandidatePresenter(CRMApplication.getInstance(requireContext())
         .getApiService(), CRMApplication.getInstance(requireContext()).getSQLiteHelper());
     mPresenter.bind(this);
 
