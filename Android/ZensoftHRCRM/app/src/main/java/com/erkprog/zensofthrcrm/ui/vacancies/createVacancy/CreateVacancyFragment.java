@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.erkprog.zensofthrcrm.CRMApplication;
+import com.erkprog.zensofthrcrm.R;
 
 public class CreateVacancyFragment extends Fragment implements CreateVacancyContract.View {
 
@@ -28,7 +29,9 @@ public class CreateVacancyFragment extends Fragment implements CreateVacancyCont
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    return super.onCreateView(inflater, container, savedInstanceState);
+    View v = inflater.inflate(R.layout.fragment_create_vacancy, container, false);
+
+    return v;
   }
 
   @Override
@@ -55,6 +58,16 @@ public class CreateVacancyFragment extends Fragment implements CreateVacancyCont
   @Override
   public void dismissProgress() {
 
+  }
+
+  public static CreateVacancyFragment newInstance() {
+    return new CreateVacancyFragment();
+  }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    getActivity().setTitle(getString(R.string.create_vacancy));
   }
 
   @Override

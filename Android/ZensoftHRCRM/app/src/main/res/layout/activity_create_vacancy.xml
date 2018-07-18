@@ -7,4 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.vacancies.createVacancy.CreateVacancy">
 
+  <FrameLayout
+      android:id="@+id/create_vacancy_fragment_container"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+  </FrameLayout>
 </android.support.constraint.ConstraintLayout>

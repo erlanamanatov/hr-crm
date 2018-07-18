@@ -2,6 +2,7 @@ package com.erkprog.zensofthrcrm.ui.requests.requestDetail;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Request;
 import com.erkprog.zensofthrcrm.data.entity.Requirement;
+import com.erkprog.zensofthrcrm.ui.vacancies.createVacancy.CreateVacancy;
 
 import java.util.List;
 
@@ -69,7 +71,8 @@ public class RequestDetailFragment extends DialogFragment {
         .setPositiveButton(R.string.create_vacancy, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-
+            Intent intent = new Intent(getActivity(), CreateVacancy.class);
+            startActivity(intent);
           }
         })
         .create();

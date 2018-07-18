@@ -11,4 +11,5 @@
   <color name="colorWhite">#FFF</color>
   <color name="colorGray">#999</color>
   <color name="colorDarkGrey">#121a30</color>
+  <color name="createVacancyLabel">#000</color>
 </resources>
