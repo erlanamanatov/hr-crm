@@ -130,19 +130,21 @@ public class VacancyDetailFragment extends Fragment implements VacancyDetailCont
   @Override
   public void showVacancyDetails(Vacancy vacancy) {
     if (vacancy.getWorkConditions() != null) {
-      for(final String workingCondition : vacancy.getWorkConditions()){
-        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams
-            .WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        llp.setMargins(20,8,0,0);
+      LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams
+          .WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+      llp.setMargins(20,8,0,0);
+      TextView workLabel = new TextView(getActivity());
+      workLabel.setText(R.string.work_conditions_label);
+      workLabel.setLayoutParams(llp);
+      mLayout.addView(workLabel);
 
+      for(final String workingCondition : vacancy.getWorkConditions()){
         TextView workText = new TextView(getActivity());
-        TextView workLabel = new TextView(getActivity());
-        workLabel.setText(R.string.work_conditions_label);
-        workText.setText(workingCondition);
+        workText.setText(String.format("-%s", workingCondition.substring(0, 1).toUpperCase() + workingCondition
+            .substring
+            (1)));
         workText.setTextColor(getResources().getColor(R.color.colorBlack));
-        workLabel.setLayoutParams(llp);
         workText.setLayoutParams(llp);
-        mLayout.addView(workLabel);
         mLayout.addView(workText);
       }
     }
