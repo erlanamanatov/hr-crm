@@ -7,7 +7,7 @@ import com.erkprog.zensofthrcrm.data.network.ApiInterface;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import java.util.List;
@@ -40,9 +40,9 @@ public class InterviewsPresenter implements InterviewsContract.Presenter {
         mService.getInterviews()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(new DisposableSingleObserver<InterviewsResponse>() {
+            .subscribe(new Consumer<InterviewsResponse>() {
               @Override
-              public void onSuccess(InterviewsResponse interviewsResponse) {
+              public void accept(InterviewsResponse interviewsResponse) throws Exception {
                 if (isViewAttached()) {
                   if (interviewsResponse != null && interviewsResponse.getInterviewList() != null) {
                     mSQLiteHelper.saveInterviews(interviewsResponse.getInterviewList());
@@ -50,11 +50,11 @@ public class InterviewsPresenter implements InterviewsContract.Presenter {
                   }
                 }
               }
-
+            }, new Consumer<Throwable>() {
               @Override
-              public void onError(Throwable e) {
+              public void accept(Throwable throwable) throws Exception {
                 if (isViewAttached()) {
-                  mView.showMessage(e.getMessage());
+                  mView.showMessage(throwable.getMessage());
                   getInterviewsLocal();
                 }
               }

@@ -1,6 +1,8 @@
 package com.erkprog.zensofthrcrm.ui.requests.requestsList;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.CRMApplication;
@@ -22,6 +25,9 @@ import com.erkprog.zensofthrcrm.ui.requests.requestDetail.RequestDetailFragment;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RequestsFragment extends Fragment implements RequestsContract.View,
     ItemClickListener<Request> {
   private static final String TAG = "REQUESTS FRAGMENT";
@@ -30,8 +36,13 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
 
   private RequestsContract.Presenter mPresenter;
   private RequestsAdapter mAdapter;
-  private RecyclerView mRecyclerView;
-  private ProgressBar mProgressBar;
+
+  @BindView(R.id.recycler_view_all_requests)
+  RecyclerView mRecyclerView;
+  @BindView(R.id.txt_empty_requests_view)
+  TextView noRequestsView;
+  @BindView(R.id.requests_progress_bar)
+  ProgressBar mProgressBar;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,8 +51,9 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
   }
 
   private void initPresenter() {
-    mPresenter = new RequestsPresenter(requireContext(),
-        CRMApplication.getInstance(requireContext()).getApiService());
+    mPresenter = new RequestsPresenter(getActivity(),
+        CRMApplication.getInstance(requireContext()).getApiService(), CRMApplication.getInstance
+        (requireContext()).getSQLiteHelper());
     mPresenter.bind(this);
   }
 
@@ -49,14 +61,15 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
   @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_requests_list, container, false);
-    mProgressBar = v.findViewById(R.id.requests_progress_bar);
+
+    ButterKnife.bind(this, v);
+
     dismissProgress();
     initRecyclerView(v);
     return v;
   }
 
   private void initRecyclerView(View v) {
-    mRecyclerView = v.findViewById(R.id.recycler_view_all_requests);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
     mRecyclerView.setLayoutManager(layoutManager);
   }
@@ -64,7 +77,12 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    mPresenter.loadData();
+    showProgress();
+    if (hasInternetConnection(view.getContext())) {
+      mPresenter.getRequestsInternet();
+    } else {
+      mPresenter.getRequestsLocal();
+    }
   }
 
   public static RequestsFragment newInstance() {
@@ -73,8 +91,13 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
 
   @Override
   public void showRequests(List<Request> requests) {
-    mAdapter = new RequestsAdapter(requests, this);
-    mRecyclerView.setAdapter(mAdapter);
+    dismissProgress();
+    if (requests.size() > 0) {
+      noRequestsView.setVisibility(View.GONE);
+      mAdapter = new RequestsAdapter(requests, this);
+      mRecyclerView.setAdapter(mAdapter);
+    } else
+      noRequestsView.setVisibility(View.VISIBLE);
   }
 
   @Override
@@ -92,6 +115,13 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
 
   @Override
   public boolean hasInternetConnection(Context context) {
+
+    ConnectivityManager connectivityManager
+        = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    if (connectivityManager != null) {
+      NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+      return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
     return false;
   }
 

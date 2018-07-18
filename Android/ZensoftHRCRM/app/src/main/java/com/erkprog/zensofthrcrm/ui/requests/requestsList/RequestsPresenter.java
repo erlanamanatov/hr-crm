@@ -1,53 +1,76 @@
 package com.erkprog.zensofthrcrm.ui.requests.requestsList;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.erkprog.zensofthrcrm.R;
+import com.erkprog.zensofthrcrm.data.db.SQLiteHelper;
 import com.erkprog.zensofthrcrm.data.entity.Request;
 import com.erkprog.zensofthrcrm.data.entity.RequestsResponse;
 import com.erkprog.zensofthrcrm.data.network.ApiInterface;
 
+import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RequestsPresenter implements RequestsContract.Presenter {
 
-  private ApiInterface mApiService;
   private RequestsContract.View mView;
+  private ApiInterface mApiService;
+  private SQLiteHelper mSQLiteHelper;
   private Context mContext;
+  private CompositeDisposable disposable = new CompositeDisposable();
 
-  RequestsPresenter(Context context, ApiInterface service) {
+  RequestsPresenter(Context context, ApiInterface service, SQLiteHelper
+      sqliteHelper) {
     mContext = context;
     mApiService = service;
+    mSQLiteHelper = sqliteHelper;
   }
 
   @Override
-  public void loadData() {
-    mView.showProgress();
-    mApiService.getRequests().enqueue(new Callback<RequestsResponse>() {
-      @Override
-      public void onResponse(@NonNull Call<RequestsResponse> call, @NonNull Response<RequestsResponse> response) {
-        if (isViewAttached()) {
-          mView.dismissProgress();
-          if (response.isSuccessful() && response.body().getRequestList() != null) {
-            mView.showRequests(response.body().getRequestList());
-          } else {
-            mView.showMessage(mContext.getString(R.string.requests_null));
-          }
-        }
-      }
-
-      @Override
-      public void onFailure(@NonNull Call<RequestsResponse> call, @NonNull Throwable t) {
-        if (isViewAttached()) {
-          mView.dismissProgress();
-          mView.showMessage(t.getMessage());
-        }
-      }
-    });
+  public void getRequestsInternet() {
+    disposable.add(
+        mApiService.getRequests()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Consumer<RequestsResponse>() {
+              @Override
+              public void accept(RequestsResponse requestsResponse) throws Exception {
+                if (isViewAttached()) {
+                  if (requestsResponse != null && requestsResponse.getRequestList() != null) {
+                    mSQLiteHelper.saveRequests(requestsResponse.getRequestList());
+                    mView.showRequests(requestsResponse.getRequestList());
+                  }
+                }
+              }
+            }, new Consumer<Throwable>() {
+              @Override
+              public void accept(Throwable throwable) throws Exception {
+                if (isViewAttached()) {
+                  mView.showMessage(throwable.getMessage());
+                  getRequestsLocal();
+                }
+              }
+            })
+    );
   }
+
+
+  @Override
+  public void getRequestsLocal() {
+    List<Request> requests = mSQLiteHelper.getRequests();
+    if (requests != null) {
+      mView.showRequests(requests);
+    }
+  }
+
+
 
   @Override
   public void onRequestItemClick(Request request) {

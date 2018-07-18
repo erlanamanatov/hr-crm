@@ -12,6 +12,7 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
@@ -42,9 +43,9 @@ public class CandidatesPresenter implements CandidatesContract.Presenter {
         mService.getCandidates()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(new DisposableSingleObserver<CandidatesResponse>() {
+            .subscribe(new Consumer<CandidatesResponse>() {
               @Override
-              public void onSuccess(CandidatesResponse candidatesResponse) {
+              public void accept(CandidatesResponse candidatesResponse) throws Exception {
                 if (isViewAttached()) {
                   if (candidatesResponse != null && candidatesResponse.getCandidateList() != null) {
                     mSQLiteHelper.saveCandidates(candidatesResponse.getCandidateList());
@@ -52,11 +53,11 @@ public class CandidatesPresenter implements CandidatesContract.Presenter {
                   }
                 }
               }
-
+            }, new Consumer<Throwable>() {
               @Override
-              public void onError(Throwable e) {
+              public void accept(Throwable throwable) throws Exception {
                 if (isViewAttached()) {
-                  mView.showMessage(e.getMessage());
+                  mView.showMessage(throwable.getMessage());
                   getCandidatesLocal();
                 }
               }

@@ -12,6 +12,7 @@ import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -45,9 +46,6 @@ public interface ApiInterface {
   @GET("vacancies")
   Single<VacanciesResponse> getVacancies();
 
-  @GET("requests")
-  Call<RequestsResponse> getRequests();
-
   @GET("requests/{id}")
   Call<Request> getDetailedRequest(@Path("id") int id);
 
@@ -58,4 +56,7 @@ public interface ApiInterface {
   @POST("interviews")
   Call<Interview> postInterview(@Header("Content-Type") String content_type,
                                 @Body InterviewRequest request);
+
+  @GET("requests")
+  Single<RequestsResponse> getRequests();
 }
