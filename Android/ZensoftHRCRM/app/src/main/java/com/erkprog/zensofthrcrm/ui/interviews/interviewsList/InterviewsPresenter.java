@@ -1,5 +1,7 @@
 package com.erkprog.zensofthrcrm.ui.interviews.interviewsList;
 
+import android.util.Log;
+
 import com.erkprog.zensofthrcrm.data.db.SQLiteHelper;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.data.entity.InterviewsResponse;
@@ -21,9 +23,8 @@ public class InterviewsPresenter implements InterviewsContract.Presenter {
   private CompositeDisposable disposable = new CompositeDisposable();
 
 
-  InterviewsPresenter(InterviewsContract.View view, ApiInterface service, SQLiteHelper
+  InterviewsPresenter(ApiInterface service, SQLiteHelper
       sqliteHelper) {
-    mView = view;
     mService = service;
     mSQLiteHelper = sqliteHelper;
   }

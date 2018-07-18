@@ -21,7 +21,7 @@ public class Vacancy {
   private String image;
   private String comments;
   @SerializedName("work_conditions")
-  private List<WorkingCondition> workConditions;
+  private List<String> workConditions;
   private String created;
   @SerializedName("last_published")
   private String lastPublished;
@@ -118,11 +118,11 @@ public class Vacancy {
     this.salaryMax = salaryMax;
   }
 
-  public List<WorkingCondition> getWorkConditions() {
+  public List<String> getWorkConditions() {
     return workConditions;
   }
 
-  public void setWorkConditions(List<WorkingCondition> workConditions) {
+  public void setWorkConditions(List<String> workConditions) {
     this.workConditions = workConditions;
   }
 

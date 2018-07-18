@@ -26,9 +26,8 @@ public class CandidatesPresenter implements CandidatesContract.Presenter {
   private SQLiteHelper mSQLiteHelper;
   private CompositeDisposable disposable = new CompositeDisposable();
 
-  CandidatesPresenter(CandidatesContract.View view, ApiInterface service, SQLiteHelper
+  CandidatesPresenter(ApiInterface service, SQLiteHelper
       sqliteHelper) {
-    mView = view;
     mService = service;
     mSQLiteHelper = sqliteHelper;
   }

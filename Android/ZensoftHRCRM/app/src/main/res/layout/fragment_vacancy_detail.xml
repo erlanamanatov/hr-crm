@@ -93,23 +93,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="@string/address"/>
-        <TextView
-            android:id="@+id/v_work_conditions_label"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_height="wrap_content"
-            android:text="@string/work_conditions_label"/>
 
-        <TextView
-            android:id="@+id/v_work_conditions"
-            android:textSize="@dimen/main_attributes"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorBlack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="@string/work_conditions"/>
-        <TextView
+      <LinearLayout
+          android:id="@+id/v_work_conditions_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/colorLightBlue"
+          android:orientation="vertical">
+
+      </LinearLayout>
+     <TextView
             android:id="@+id/v_working_hours_label"
             android:layout_width="match_parent"
             android:layout_marginTop="8dp"
@@ -205,6 +198,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="@string/vlast_published"/>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/v_buttons_layout"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorLightBlue"
+            android:orientation="horizontal">
+          <Button
+              android:id="@+id/v_edit"
+              style="@style/Widget.AppCompat.Button.Colored"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="20dp"
+              android:text="@string/btn_edit"/>
+          <Button
+              android:id="@+id/v_publish"
+              style="@style/Widget.AppCompat.Button.Colored"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="20dp"
+              app:layout_constraintEnd_toEndOf="parent"
+              android:text="@string/btn_publish"/>
+        </android.support.constraint.ConstraintLayout>
+
       </LinearLayout>
     </android.support.v7.widget.CardView>
 

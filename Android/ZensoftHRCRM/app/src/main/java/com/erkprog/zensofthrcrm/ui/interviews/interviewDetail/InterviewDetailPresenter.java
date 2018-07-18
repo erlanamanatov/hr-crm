@@ -20,9 +20,8 @@ public class InterviewDetailPresenter implements InterviewDetailContract.Present
   private ApiInterface mService;
   private SQLiteHelper mSQLiteHelper;
 
-  InterviewDetailPresenter(InterviewDetailContract.View view, ApiInterface service, SQLiteHelper
+  InterviewDetailPresenter(ApiInterface service, SQLiteHelper
       sqLiteHelper) {
-    mView = view;
     mService = service;
     mSQLiteHelper = sqLiteHelper;
   }

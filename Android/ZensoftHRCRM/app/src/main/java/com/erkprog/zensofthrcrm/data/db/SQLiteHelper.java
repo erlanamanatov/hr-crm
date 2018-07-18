@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
@@ -21,7 +20,6 @@ import com.erkprog.zensofthrcrm.data.entity.Requirement;
 import com.erkprog.zensofthrcrm.data.entity.Template;
 import com.erkprog.zensofthrcrm.data.entity.User;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
-import com.erkprog.zensofthrcrm.data.entity.WorkingCondition;
 import com.erkprog.zensofthrcrm.utils.Converter;
 
 import java.util.ArrayList;
@@ -31,7 +29,7 @@ import java.util.List;
 public class SQLiteHelper extends SQLiteOpenHelper {
 
   private static final String DB_NAME = "HR_CRM";
-  private static final int DB_VERSION = 7;
+  private static final int DB_VERSION = 1;
 
   // Tables
   private static final String INTERVIEWS = "INTERVIEWS";
@@ -177,7 +175,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       TITLE + " TEXT, " +
       CITY + " TEXT, " +
       ADDRESS + " TEXT, " +
-      WORKING_CONDITIONS + ID + " TEXT, " +
+      WORKING_CONDITIONS + " TEXT, " +
       SALARY_MIN + " REAL, " +
       SALARY_MAX + " REAL, " +
       RESPONSIBILITIES + " TEXT, " +
@@ -220,12 +218,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       CONTENT + " TEXT, " +
       CREATED + " TEXT)";
 
-  private static final String CREATE_TABLE_WORKING_CONDITIONS = "CREATE TABLE IF NOT EXISTS " +
-      WORKING_CONDITIONS + "(" +
-      ID + " INTEGER_PRIMARY_KEY, " +
-      VACANCY + ID + " TEXT, " +
-      NAME + " TEXT)";
-
 
   public SQLiteHelper(Context context) {
     super(context, DB_NAME, null, DB_VERSION);
@@ -234,7 +226,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
   @Override
   public void onCreate(SQLiteDatabase db) {
-    db.execSQL(CREATE_TABLE_WORKING_CONDITIONS);
     db.execSQL(CREATE_TABLE_CANDIDATES);
     db.execSQL(CREATE_TABLE_CRITERIAS);
     db.execSQL(CREATE_TABLE_DEPARTMENTS);
@@ -256,7 +247,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     db.execSQL("DROP TABLE IF EXISTS " + CANDIDATES);
-    db.execSQL("DROP TABLE IF EXISTS " + WORKING_CONDITIONS);
     db.execSQL("DROP TABLE IF EXISTS " + CRITERIAS);
     db.execSQL("DROP TABLE IF EXISTS " + DEPARTMENTS);
     db.execSQL("DROP TABLE IF EXISTS " + EVALUATIONS);
@@ -346,31 +336,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     db.close();
   }
 
-
-  public void saveWorkingConditions(List<WorkingCondition> workingConditions) {
-    SQLiteDatabase db = this.getWritableDatabase();
-    ContentValues cv = new ContentValues();
-
-    for (int i = 0; i < workingConditions.size(); i++) {
-      WorkingCondition workingCondition = workingConditions.get(i);
-
-      cv.put(NAME, workingCondition.getName());
-
-      Cursor cursor = db.rawQuery("SELECT * FROM " + WORKING_CONDITIONS + " WHERE " + NAME + " =?",
-          new
-              String[]{String.valueOf(workingCondition.getName())});
-      if (cursor.getCount() > 0)
-        db.update(WORKING_CONDITIONS, cv, NAME + " = ?", new String[]{
-            workingCondition.getName()});
-      else
-        db.insert(WORKING_CONDITIONS, null,
-            cv);
-      // if row is existed then update by id
-
-    }
-
-    db.close();
-  }
 
 
   public void savePositions(List<Position> positions) {
@@ -672,13 +637,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
       List<String> workingConditionsIds = new ArrayList<String>();
       if (vacancy.getWorkConditions() != null) {
-        List<WorkingCondition> workConditions = vacancy.getWorkConditions();
-        for (int j = 0; j < workConditions.size(); j++) {
-          workingConditionsIds.add(workConditions.get(j).getName());
-        }
+        List<String> workConditions = vacancy.getWorkConditions();
+        workingConditionsIds.addAll(workConditions);
         // convert from List to String
         String stringWorkingConditionsList = Converter.convertListToString(workingConditionsIds);
-        cv.put(WORKING_CONDITIONS + ID, stringWorkingConditionsList);
+        cv.put(WORKING_CONDITIONS, stringWorkingConditionsList);
       }
 
       cv.put(SALARY_MIN, vacancy.getSalaryMin());
@@ -804,28 +767,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     return department;
   }
 
-  public WorkingCondition getWorkingCondition(String workingConditionId) {
-    WorkingCondition workingCondition = new WorkingCondition();
-
-    SQLiteDatabase dbReadable = this.getReadableDatabase();
-
-    Cursor workCursor = dbReadable.rawQuery(
-        "SELECT * FROM " + WORKING_CONDITIONS + " WHERE " + ID + "=?",
-        new String[]{workingConditionId}
-    );
-    if (workCursor.moveToFirst()) {
-      do {
-
-        workingCondition.setName(workCursor.getString(workCursor.getColumnIndex(NAME)));
-
-      } while (workCursor.moveToNext());
-    }
-
-    workCursor.close();
-    dbReadable.close();
-
-    return workingCondition;
-  }
 
   public Cv getCv(String cvId) {
     Cv cv = new Cv();
@@ -966,13 +907,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         vacancy.setCity(vacancyCursor.getString(vacancyCursor.getColumnIndex(CITY)));
         vacancy.setAddress(vacancyCursor.getString(vacancyCursor.getColumnIndex(ADDRESS)));
 
-        if (vacancyCursor.getString(vacancyCursor.getColumnIndex(WORKING_CONDITIONS + ID)) != null) {
+        if (vacancyCursor.getString(vacancyCursor.getColumnIndex(WORKING_CONDITIONS)) != null) {
           List<String> workStringList = Converter.convertStringToList(vacancyCursor.getString
               (vacancyCursor
                   .getColumnIndex
-                      (WORKING_CONDITIONS + ID)));
+                      (WORKING_CONDITIONS)));
 
-          vacancy.setWorkConditions(getWorkingConditions(workStringList));
+          vacancy.setWorkConditions(workStringList);
         }
         vacancy.setSalaryMax(vacancyCursor.getFloat(vacancyCursor.getColumnIndex(SALARY_MAX)));
         vacancy.setSalaryMin(vacancyCursor.getFloat(vacancyCursor.getColumnIndex(SALARY_MIN)));
@@ -1244,15 +1185,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       requirements.add(getRequirement(reqStringList.get(i)));
 
     return requirements;
-  }
-
-  private List<WorkingCondition> getWorkingConditions(List<String> worStringList) {
-
-    List<WorkingCondition> workingConditions = new ArrayList<WorkingCondition>();
-    for (int i = 0; i < worStringList.size(); i++)
-      workingConditions.add(getWorkingCondition(worStringList.get(i)));
-
-    return workingConditions;
   }
 
   private List<Criteria> getCriterias(List<String> criteriaStringList) {
@@ -1705,7 +1637,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         String title = cursor.getString(titleIndex);
         String address = cursor.getString(addressIndex);
         String city = cursor.getString(cityIndex);
-        String worConsIds = cursor.getString(worConsIndex);
+
+        if (worConsIndex> 0) {
+          String worConsIds = cursor.getString(worConsIndex);
+          if (worConsIds != null)
+            vacancy.setWorkConditions((Converter.convertStringToList
+                (worConsIds)));
+        }
+
         Float salMax = cursor.getFloat(salMaxIndex);
         Float salMin = cursor.getFloat(salMinIndex);
         String res = cursor.getString(resIndex);
@@ -1732,9 +1671,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         vacancy.setCity(city);
         vacancy.setLastPublished(lastPublished);
         vacancy.setCreated(created);
-        if (worConsIds != null)
-          vacancy.setWorkConditions(getWorkingConditions(Converter.convertStringToList
-              (worConsIds)));
+
 
         vacancies.add(vacancy);
 

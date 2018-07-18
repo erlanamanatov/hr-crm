@@ -71,16 +71,15 @@ public class RequestsPresenter implements RequestsContract.Presenter {
   }
 
 
-
   @Override
   public void onRequestItemClick(Request request) {
     mView.showProgress();
     mApiService.getDetailedRequest(request.getId()).enqueue(new Callback<Request>() {
       @Override
       public void onResponse(Call<Request> call, Response<Request> response) {
-        if (isViewAttached()){
+        if (isViewAttached()) {
           mView.dismissProgress();
-          if (response.isSuccessful()){
+          if (response.isSuccessful()) {
             Request detailedRequest = response.body();
             mView.showRequestDetails(detailedRequest);
           } else {

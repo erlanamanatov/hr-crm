@@ -1,24 +1,16 @@
 package com.erkprog.zensofthrcrm.ui.vacancies.vacanciesList;
 
-import android.content.Context;
-
-import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.db.SQLiteHelper;
 import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
 import com.erkprog.zensofthrcrm.data.network.ApiInterface;
-import com.erkprog.zensofthrcrm.ui.interviews.interviewsList.InterviewsContract;
 
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class VacanciesPresenter implements VacanciesContract.Presenter {
 
@@ -27,9 +19,8 @@ public class VacanciesPresenter implements VacanciesContract.Presenter {
   private SQLiteHelper mSQLiteHelper;
   private CompositeDisposable disposable = new CompositeDisposable();
 
-  VacanciesPresenter(VacanciesContract.View view, ApiInterface service, SQLiteHelper
+  VacanciesPresenter(ApiInterface service, SQLiteHelper
       sqliteHelper) {
-    mView = view;
     mService = service;
     mSQLiteHelper = sqliteHelper;
   }
@@ -71,7 +62,7 @@ public class VacanciesPresenter implements VacanciesContract.Presenter {
 
   @Override
   public void onVacancyItemClick(Vacancy vacancy) {
-//    mView.showDetailedVacancy(vacancy.getId());
+    mView.showDetailedVacancy(vacancy.getId());
   }
 
   private boolean isViewAttached() {

@@ -27,9 +27,8 @@ public class EditCandidatePresenter implements EditCandidateContract.Presenter {
   private static final String CONTENT_TYPE = "application/json";
 
 
-  EditCandidatePresenter(EditCandidateContract.View view, ApiInterface service, SQLiteHelper
+  EditCandidatePresenter(ApiInterface service, SQLiteHelper
       sqliteHelper) {
-    mView = view;
     mService = service;
     mSQLiteHelper = sqliteHelper;
   }

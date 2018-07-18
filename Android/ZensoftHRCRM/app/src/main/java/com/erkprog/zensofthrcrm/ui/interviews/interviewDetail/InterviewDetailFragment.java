@@ -40,7 +40,7 @@ public class InterviewDetailFragment extends Fragment implements InterviewDetail
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mPresenter = new InterviewDetailPresenter(this, CRMApplication.getInstance(requireContext())
+    mPresenter = new InterviewDetailPresenter(CRMApplication.getInstance(requireContext())
         .getApiService(), CRMApplication.getInstance(requireContext()).getSQLiteHelper());
     mPresenter.bind(this);
   }

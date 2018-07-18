@@ -1,7 +1,9 @@
 package com.erkprog.zensofthrcrm.ui.vacancies.vacancyDetail;
 
+import android.util.Log;
+
 import com.erkprog.zensofthrcrm.data.db.SQLiteHelper;
-import com.erkprog.zensofthrcrm.data.entity.Interview;
+import com.erkprog.zensofthrcrm.data.entity.Vacancy;
 import com.erkprog.zensofthrcrm.data.network.ApiInterface;
 
 import java.util.ArrayList;
@@ -13,26 +15,47 @@ import retrofit2.Response;
 
 
 public class VacancyDetailPresenter implements VacancyDetailContract.Presenter {
-  @Override
-  public void getVacancyInternet(int vacancyId) {
 
-
-  }
-
-  @Override
-  public void getVacancyLocal(int vacancyId) {
-
-  }
 
   private VacancyDetailContract.View mView;
   private ApiInterface mService;
   private SQLiteHelper mSQLiteHelper;
 
-  VacancyDetailPresenter(VacancyDetailContract.View view, ApiInterface service, SQLiteHelper
+  VacancyDetailPresenter(ApiInterface service, SQLiteHelper
       sqLiteHelper) {
-    mView = view;
     mService = service;
     mSQLiteHelper = sqLiteHelper;
+  }
+
+  @Override
+  public void getVacancyInternet(final int vacancyId) {
+
+    mService.getDetailedVacancy(vacancyId).enqueue(new Callback<Vacancy>() {
+      @Override
+      public void onResponse(Call<Vacancy> call, Response<Vacancy> response) {
+        if (isViewAttached()) {
+          if (response.isSuccessful() && response.body() != null) {
+            mSQLiteHelper.saveVacancies(new ArrayList<Vacancy>(Arrays.asList(response.body())));
+            mView.showVacancyDetails(response.body());
+          }
+        }
+      }
+
+      @Override
+      public void onFailure(Call<Vacancy> call, Throwable t) {
+        if (isViewAttached()) {
+          mView.showMessage(t.getMessage());
+          getVacancyLocal(vacancyId);
+        }
+      }
+    });
+
+  }
+
+  @Override
+  public void getVacancyLocal(int vacancyId) {
+    Vacancy vacancy = mSQLiteHelper.getVacancy(String.valueOf(vacancyId));
+    mView.showVacancyDetails(vacancy);
   }
 
 
