@@ -89,4 +89,5 @@
   <string name="responsibilities">Responsibilities</string>
   <string name="msg_no_requests">Requests not found</string>
   <string name="create">Create</string>
+  <string name="vacancy_created">Vacancy created</string>
 </resources>

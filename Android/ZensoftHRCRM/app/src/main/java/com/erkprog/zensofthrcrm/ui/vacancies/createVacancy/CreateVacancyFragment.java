@@ -1,6 +1,8 @@
 package com.erkprog.zensofthrcrm.ui.vacancies.createVacancy;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +14,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
@@ -44,6 +48,7 @@ public class CreateVacancyFragment extends Fragment implements CreateVacancyCont
   private TextView createdBy;
   private TextView created;
   private Button buttonCreate;
+  private ProgressBar mProgressBar;
 
   private CreateVacancyContract.Presenter mPresenter;
 
@@ -87,6 +92,11 @@ public class CreateVacancyFragment extends Fragment implements CreateVacancyCont
     created = v.findViewById(R.id.cr_vac_created);
     buttonCreate = v.findViewById(R.id.cr_vac_create);
     buttonCreate.setOnClickListener(this);
+    mProgressBar = v.findViewById(R.id.cr_vac_progress_bar);
+    Drawable progressDrawable = mProgressBar.getProgressDrawable().mutate();
+    progressDrawable.setColorFilter(Color.YELLOW, android.graphics.PorterDuff.Mode.SRC_IN);
+    mProgressBar.setProgressDrawable(progressDrawable);
+    mProgressBar.setVisibility(View.GONE);
   }
 
   private void fillFields() {
@@ -111,11 +121,11 @@ public class CreateVacancyFragment extends Fragment implements CreateVacancyCont
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    mPresenter.loadData();
   }
 
   @Override
   public void showMessage(String message) {
+    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 
   }
 
@@ -126,12 +136,14 @@ public class CreateVacancyFragment extends Fragment implements CreateVacancyCont
 
   @Override
   public void showProgress() {
-
+    buttonCreate.setEnabled(false);
+    mProgressBar.setVisibility(View.VISIBLE);
   }
 
   @Override
   public void dismissProgress() {
-
+    buttonCreate.setEnabled(true);
+    mProgressBar.setVisibility(View.GONE);
   }
 
   public static CreateVacancyFragment newInstance(Request request) {
@@ -191,7 +203,7 @@ public class CreateVacancyFragment extends Fragment implements CreateVacancyCont
               .build();
 
           Log.d(TAG, "onClick: " + vacancyRequest.toString());
-//          mPresenter.onCreateButtonClick();
+          mPresenter.onCreateButtonClick(vacancyRequest);
         }
         break;
 
