@@ -83,4 +83,6 @@
   <string name="requests">Requests</string>
   <string name="vacancies">Vacancies</string>
   <string name="vacancy_details">Vacancy details</string>
+  <string name="responsibilities">Responsibilities</string>
+  <string name="msg_no_requests">Requests not found</string>
 </resources>

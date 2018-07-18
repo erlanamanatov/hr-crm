@@ -23,7 +23,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerHorizontal="true"
-      android:text="@string/msg_no_vacancies"
+      android:text="@string/msg_no_requests"
       android:textColor="@color/colorGray"
       android:visibility="gone"
       android:textSize="@dimen/msg_not_found"

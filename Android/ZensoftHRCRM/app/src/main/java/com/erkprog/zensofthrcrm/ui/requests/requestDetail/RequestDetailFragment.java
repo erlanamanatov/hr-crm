@@ -71,8 +71,10 @@ public class RequestDetailFragment extends DialogFragment {
         .setPositiveButton(R.string.create_vacancy, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            Intent intent = new Intent(getActivity(), CreateVacancy.class);
-            startActivity(intent);
+            if (mRequest != null) {
+              Intent intent = CreateVacancy.newIntent(getActivity(), mRequest);
+              startActivity(intent);
+            }
           }
         })
         .create();
