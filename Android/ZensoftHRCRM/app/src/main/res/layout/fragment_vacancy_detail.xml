@@ -1,230 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?><!--<ScrollView--><!--xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent">-->
 
 <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     >
 
   <LinearLayout
+      android:id="@+id/i_root_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <TextView
+        android:id="@+id/v_name_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/name_label"/>
 
-      <LinearLayout
-          android:id="@+id/i_root_layout"
-          android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/v_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/main_attributes"
+        tools:text="@string/name"/>
+
+    <TextView
+        android:id="@+id/v_title_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/title_label"/>
+
+    <TextView
+        android:id="@+id/v_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/main_attributes"
+        tools:text="@string/title"/>
+
+    <TextView
+        android:id="@+id/v_city_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/city_label"/>
+
+    <TextView
+        android:id="@+id/v_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/main_attributes"
+        tools:text="@string/city"/>
+
+    <TextView
+        android:id="@+id/v_address_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/address_label"/>
+
+    <TextView
+        android:id="@+id/v_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/main_attributes"
+        tools:text="@string/address"/>
+
+    <LinearLayout
+        android:id="@+id/v_work_conditions_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/v_working_hours_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/working_hours_label"/>
+
+    <TextView
+        android:id="@+id/v_working_hours"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/main_attributes"
+        tools:text="@string/working_hours"/>
+
+    <TextView
+        android:id="@+id/v_salary_min_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/salary_min_label"/>
+
+    <TextView
+        android:id="@+id/v_salary_min"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/main_attributes"
+        tools:text="@string/salary_min"/>
+
+    <TextView
+        android:id="@+id/v_salary_max_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/salary_max_label"/>
+
+    <TextView
+        android:id="@+id/v_salary_max"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/main_attributes"
+        tools:text="@string/salary_max"/>
+
+    <TextView
+        android:id="@+id/v_comments_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/comments_label"/>
+
+    <TextView
+        android:id="@+id/v_comments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/main_attributes"
+        tools:text="@string/vcomments"/>
+
+    <TextView
+        android:id="@+id/v_created_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/created_label"/>
+
+    <TextView
+        android:id="@+id/v_created"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/main_attributes"
+        tools:text="@string/vcreated"/>
+
+    <TextView
+        android:id="@+id/v_last_published_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/last_published_label"/>
+
+    <TextView
+        android:id="@+id/v_last_published"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/main_attributes"
+        tools:text="@string/vlast_published"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/v_buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorLightBlue"
+        android:orientation="horizontal">
+
+      <Button
+          android:id="@+id/v_edit"
+          style="@style/Widget.AppCompat.Button.Colored"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:background="@color/colorLightBlue"
-          android:orientation="vertical">
+          android:layout_marginTop="20dp"
+          android:text="@string/btn_edit"/>
 
-        <TextView
-            android:id="@+id/v_name_label"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_height="wrap_content"
-            android:text="@string/name_label"/>
-
-        <TextView
-            android:id="@+id/v_name"
-            android:textSize="@dimen/main_attributes"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorBlack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="@string/name"/>
-        <TextView
-            android:id="@+id/v_title_label"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_height="wrap_content"
-            android:text="@string/title_label"/>
-
-        <TextView
-            android:id="@+id/v_title"
-            android:textSize="@dimen/main_attributes"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorBlack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="@string/title"/>
-        <TextView
-            android:id="@+id/v_city_label"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_height="wrap_content"
-            android:text="@string/city_label"/>
-
-        <TextView
-            android:id="@+id/v_city"
-            android:textSize="@dimen/main_attributes"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorBlack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="@string/city"/>
-        <TextView
-            android:id="@+id/v_address_label"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_height="wrap_content"
-            android:text="@string/address_label"/>
-
-        <TextView
-            android:id="@+id/v_address"
-            android:textSize="@dimen/main_attributes"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorBlack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="@string/address"/>
-
-      <LinearLayout
-          android:id="@+id/v_work_conditions_layout"
-          android:layout_width="match_parent"
+      <Button
+          android:id="@+id/v_publish"
+          style="@style/Widget.AppCompat.Button.Colored"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:background="@color/colorLightBlue"
-          android:orientation="vertical">
+          android:layout_marginTop="20dp"
+          android:text="@string/btn_publish"
+          app:layout_constraintEnd_toEndOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
 
-      </LinearLayout>
-     <TextView
-            android:id="@+id/v_working_hours_label"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_height="wrap_content"
-            android:text="@string/working_hours_label"/>
+  </LinearLayout>
 
-        <TextView
-            android:id="@+id/v_working_hours"
-            android:textSize="@dimen/main_attributes"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorBlack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="@string/working_hours"/>
-        <TextView
-            android:id="@+id/v_salary_min_label"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_height="wrap_content"
-            android:text="@string/salary_min_label"/>
-
-        <TextView
-            android:id="@+id/v_salary_min"
-            android:textSize="@dimen/main_attributes"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorBlack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="@string/salary_min"/>
-        <TextView
-            android:id="@+id/v_salary_max_label"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_height="wrap_content"
-            android:text="@string/salary_max_label"/>
-
-        <TextView
-            android:id="@+id/v_salary_max"
-            android:textSize="@dimen/main_attributes"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorBlack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="@string/salary_max"/>
-        <TextView
-            android:id="@+id/v_comments_label"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_height="wrap_content"
-            android:text="@string/comments_label"/>
-
-        <TextView
-            android:id="@+id/v_comments"
-            android:textSize="@dimen/main_attributes"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorBlack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="@string/vcomments"/>
-        <TextView
-            android:id="@+id/v_created_label"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_height="wrap_content"
-            android:text="@string/created_label"/>
-
-        <TextView
-            android:id="@+id/v_created"
-            android:textSize="@dimen/main_attributes"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorBlack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="@string/vcreated"/>
-        <TextView
-            android:id="@+id/v_last_published_label"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_height="wrap_content"
-            android:text="@string/last_published_label"/>
-
-        <TextView
-            android:id="@+id/v_last_published"
-            android:textSize="@dimen/main_attributes"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorBlack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="@string/vlast_published"/>
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/v_buttons_layout"
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorLightBlue"
-            android:orientation="horizontal">
-          <Button
-              android:id="@+id/v_edit"
-              style="@style/Widget.AppCompat.Button.Colored"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="20dp"
-              android:text="@string/btn_edit"/>
-          <Button
-              android:id="@+id/v_publish"
-              style="@style/Widget.AppCompat.Button.Colored"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="20dp"
-              app:layout_constraintEnd_toEndOf="parent"
-              android:text="@string/btn_publish"/>
-        </android.support.constraint.ConstraintLayout>
-
-      </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-  </LinearLayout><!--</ScrollView>-->
 </ScrollView>

@@ -93,9 +93,9 @@ public class CreateVacancyFragment extends Fragment implements CreateVacancyCont
     buttonCreate = v.findViewById(R.id.cr_vac_create);
     buttonCreate.setOnClickListener(this);
     mProgressBar = v.findViewById(R.id.cr_vac_progress_bar);
-    Drawable progressDrawable = mProgressBar.getProgressDrawable().mutate();
-    progressDrawable.setColorFilter(Color.YELLOW, android.graphics.PorterDuff.Mode.SRC_IN);
-    mProgressBar.setProgressDrawable(progressDrawable);
+//    Drawable progressDrawable = mProgressBar.getProgressDrawable().mutate();
+//    progressDrawable.setColorFilter(Color.YELLOW, android.graphics.PorterDuff.Mode.SRC_IN);
+//    mProgressBar.setProgressDrawable(progressDrawable);
     mProgressBar.setVisibility(View.GONE);
   }
 
@@ -154,6 +154,8 @@ public class CreateVacancyFragment extends Fragment implements CreateVacancyCont
     return fragment;
   }
 
+
+
   private String getDisplayRequirements(List<Requirement> list) {
     if (list == null) {
       return "";
@@ -189,6 +191,20 @@ public class CreateVacancyFragment extends Fragment implements CreateVacancyCont
           List<String> wConditions = new ArrayList<>();
           wConditions.add(workConditions.getText().toString());
 
+          int minSalaryInt;
+          if (minSalary.getText().toString().isEmpty()) {
+            minSalaryInt = 0;
+          } else {
+            minSalaryInt = Integer.parseInt(minSalary.getText().toString());
+          }
+
+          int maxSalaryInt;
+          if (maxSalary.getText().toString().isEmpty()) {
+            maxSalaryInt = 0;
+          } else {
+            maxSalaryInt = Integer.parseInt(minSalary.getText().toString());
+          }
+
           VacancyRequest vacancyRequest = new VacancyRequest.Builder()
               .setRequestId(mRequest.getId())
               .setCreatedBy(mRequest.getCreatedBy().getId())
@@ -197,8 +213,8 @@ public class CreateVacancyFragment extends Fragment implements CreateVacancyCont
               .setAddress(address.getText().toString())
               .setWorkingConditions(wConditions)
               .setResponsibilities(responsibilities.getText().toString())
-              .setSalaryMin(Integer.parseInt(minSalary.getText().toString()))
-              .setSalaryMax(Integer.parseInt(maxSalary.getText().toString()))
+              .setSalaryMin(minSalaryInt)
+              .setSalaryMax(maxSalaryInt)
               .setComments(comments.getText().toString())
               .build();
 
