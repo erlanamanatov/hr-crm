@@ -33,4 +33,9 @@ public class CreateVacancyPresenter implements CreateVacancyContract.Presenter {
   public void loadData() {
 
   }
+
+  @Override
+  public void onCreateButtonClick() {
+
+  }
 }

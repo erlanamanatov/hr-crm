@@ -251,6 +251,12 @@
           android:layout_height="wrap_content"
           android:textColor="@color/colorBlack"/>
 
+      <Button
+          android:id="@+id/cr_vac_create"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/create"/>
+
       <View
           android:id="@+id/view3"
           android:layout_width="match_parent"

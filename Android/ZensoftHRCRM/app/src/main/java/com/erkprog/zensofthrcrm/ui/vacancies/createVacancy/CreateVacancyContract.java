@@ -12,5 +12,7 @@ public interface CreateVacancyContract {
   interface Presenter extends ILifecycle<View> {
 
     void loadData();
+
+    void onCreateButtonClick();
   }
 }

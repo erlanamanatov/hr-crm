@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,10 +19,13 @@ import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Request;
 import com.erkprog.zensofthrcrm.data.entity.Requirement;
 import com.erkprog.zensofthrcrm.data.entity.User;
+import com.erkprog.zensofthrcrm.data.entity.VacancyRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CreateVacancyFragment extends Fragment implements CreateVacancyContract.View {
+public class CreateVacancyFragment extends Fragment implements CreateVacancyContract.View, View
+    .OnClickListener {
 
   private static final String TAG = "CREATE VACANCY";
   private static final String ARG_REQUEST = "ARG REQUEST";
@@ -39,6 +43,7 @@ public class CreateVacancyFragment extends Fragment implements CreateVacancyCont
   private EditText maxSalary;
   private TextView createdBy;
   private TextView created;
+  private Button buttonCreate;
 
   private CreateVacancyContract.Presenter mPresenter;
 
@@ -80,6 +85,8 @@ public class CreateVacancyFragment extends Fragment implements CreateVacancyCont
     maxSalary = v.findViewById(R.id.cr_vac_max_salary);
     createdBy = v.findViewById(R.id.cr_vac_created_by);
     created = v.findViewById(R.id.cr_vac_created);
+    buttonCreate = v.findViewById(R.id.cr_vac_create);
+    buttonCreate.setOnClickListener(this);
   }
 
   private void fillFields() {
@@ -159,5 +166,37 @@ public class CreateVacancyFragment extends Fragment implements CreateVacancyCont
   public void onDestroyView() {
     super.onDestroyView();
     mPresenter.unbind();
+  }
+
+  @Override
+  public void onClick(View v) {
+
+    switch (v.getId()) {
+      case R.id.cr_vac_create:
+        if (mRequest != null) {
+          List<String> wConditions = new ArrayList<>();
+          wConditions.add(workConditions.getText().toString());
+
+          VacancyRequest vacancyRequest = new VacancyRequest.Builder()
+              .setRequestId(mRequest.getId())
+              .setCreatedBy(mRequest.getCreatedBy().getId())
+              .setTitle(title.getText().toString())
+              .setCity(city.getText().toString())
+              .setAddress(address.getText().toString())
+              .setWorkingConditions(wConditions)
+              .setResponsibilities(responsibilities.getText().toString())
+              .setSalaryMin(Integer.parseInt(minSalary.getText().toString()))
+              .setSalaryMax(Integer.parseInt(maxSalary.getText().toString()))
+              .setComments(comments.getText().toString())
+              .build();
+
+          Log.d(TAG, "onClick: " + vacancyRequest.toString());
+//          mPresenter.onCreateButtonClick();
+        }
+        break;
+
+      default:
+        break;
+    }
   }
 }
